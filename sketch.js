@@ -1,19 +1,25 @@
+var r = 0;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+  frameRate(5);
 }
 
 function draw() {
   background(20);
+  // r = r + 0.1;
   translate(width/2,height/2)
   push();
-  rotate(-60);
-  polygon(0,0,300,5)
+  // console.log(r)
+  rotate(r);
+  polygon(0,0,350,8)
   pop();
-  
+
+  push();
   stroke(60);
   strokeWeight(2);
-  rect(0,-15,200,200)
+  rect(0,0,550,550)
+  pop();
 }
 
 function polygon(x, y, radius, npoints) {
