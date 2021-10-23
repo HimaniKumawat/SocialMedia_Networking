@@ -21,11 +21,11 @@ function draw() {
   push();
   // console.log(r)
   rotate(r);
-  polygon(-100,-200,350,8)
+  polygon(-100,-300,350,8)
   pop();
 
   push();
-  image(content_arr[0],-100,-200,650,600);
+  image(content_arr[0],-100,-300,650,600);
   // stroke(60);
   // strokeWeight(2);
   // rect(0,0,550,550)
