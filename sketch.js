@@ -2,7 +2,8 @@ var r = 0;
 var content1 = [];
 content1 = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG'];
 var content_arr=[];
-
+var positiony = 0;
+var positionx = 0;
 function preload(){
       content_arr[0]=loadImage(content1[0]);
 }
@@ -12,6 +13,8 @@ function setup() {
   rectMode(CENTER);
   imageMode(CENTER);
   frameRate(5);
+  positionx = width-width-50;
+  positiony = height-height-300;
 }
 
 function draw() {
@@ -21,11 +24,11 @@ function draw() {
   push();
   // console.log(r)
   rotate(r);
-  polygon(-100,-300,350,8)
+  polygon(positionx,positiony,350,8)
   pop();
 
   push();
-  image(content_arr[0],-100,-300,650,600);
+  image(content_arr[0],positionx,positiony,650,600);
   // stroke(60);
   // strokeWeight(2);
   // rect(0,0,550,550)
