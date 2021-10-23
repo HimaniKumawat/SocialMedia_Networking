@@ -21,15 +21,16 @@ function draw() {
   push();
   // console.log(r)
   rotate(r);
-  polygon(0,0,350,8)
+  polygon(-100,-200,350,8)
   pop();
 
   push();
-  image(content_arr[0],0,0,550,600);
+  image(content_arr[0],-100,-200,650,600);
   // stroke(60);
   // strokeWeight(2);
   // rect(0,0,550,550)
   pop();
+  noLoop();
 }
 
 function polygon(x, y, radius, npoints) {
@@ -39,6 +40,12 @@ function polygon(x, y, radius, npoints) {
     let sx = x + cos(a) * radius;
     let sy = y + sin(a) * radius;
     vertex(sx, sy);
+
+    push();
+    stroke(255);
+    fill(255);
+    line(sx,sy, sx+100, sy+500)
+    pop();
   }
   endShape(CLOSE);
 }
