@@ -6,8 +6,13 @@ var positiony = 0;
 var positionx = 0;
 var bg = 20;
 var line_x1, line_y1, line_lengthx, line_lengthy = 0;
+var x, y, radius,d = 0;
+var r, g, b;
+var m_size;
+var info = false;
+
 function preload(){
-      content_arr[0]=loadImage(content1[0]);
+  content_arr[0]=loadImage(content1[0]);
 }
 
 function setup() {
@@ -15,15 +20,16 @@ function setup() {
   rectMode(CENTER);
   imageMode(CENTER);
   ellipseMode(CENTER);
-  frameRate(5);
-  positionx = width-width-50;
-  positiony = height-height-300;
-}
-
-function draw() {
+  // frameRate(5);
+  positionx = windowWidth-windowWidth;
+  var m = map(0,0,windowHeight,-5,100)
+  positiony = windowHeight-windowHeight-m;
+  //circular button
+  x = windowWidth-100;
+  y = 80;
+  radius = 500;
   background(bg);
-  // r = r + 0.1;
-  translate(width/2,height/2)
+  translate(windowWidth/2,windowHeight/2)
   push();
   // console.log(r)
   rotate(r);
@@ -36,7 +42,67 @@ function draw() {
   // strokeWeight(2);
   // rect(0,0,550,550)
   pop();
-  noLoop();
+
+  //set the starting color to a dark gray
+  r = 50;
+  g = 50;
+  b = 50;
+  strokeWeight(2);
+}
+
+
+
+function draw() {
+  m_size = map(radius,0,windowWidth,100,30)
+  // console.log(m_size)
+  var m_xpos = map(windowWidth,0,windowWidth,windowWidth-10,windowWidth-160);
+  var m_ypos = map(windowHeight,0,windowHeight,100,200);
+  d = dist(mouseX, mouseY, m_xpos, m_ypos);
+  //if the mouse is over the circle
+  if (d < m_size) {
+    //turn the fill on for 'mouse over' effect
+    stroke(225);
+    strokeWeight(9);
+    fill(r,g,b);
+    // console.log("over");
+  }
+  else{ //if it isn't over the circle
+    //set the fill to (r,g,b) for 'mouse over' effect
+    stroke(220);
+    strokeWeight(1);
+    fill(r,g,b);
+  }
+
+  ellipse(m_xpos, m_ypos, m_size, m_size);
+  push();
+
+  textSize(m_size-14);
+  fill(255)
+  strokeWeight(2)
+  text("i",m_xpos-6,m_ypos+22)
+  pop();
+  console.log(info);
+  // noLoop();
+}
+
+function mousePressed(){
+
+  if (d < m_size) {
+    // info=true;
+    //set the red, green, and blue variables to a random value
+    if(info == true){
+      r = 50;
+      g = 50;
+      b = 50;
+      info = false;
+    }
+    else if(info==false){
+      r = 80;
+      g = 80;
+      b = 80;
+      info = true;
+    }
+  }
 }
 
 function polygon(x, y, radius, npoints) {
