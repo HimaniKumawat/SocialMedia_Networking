@@ -12,6 +12,43 @@ var m_size;
 var info = false;
 let button;
 var radio;
+var font_size;
+var infoButton_size, b_radius, b_xpos, b_ypos;
+var oct_size;
+var content_size;
+var min_csize;
+var max_csize;
+var oct_posx;
+var oct_posy;
+var button_posy;
+var button_posx;
+
+//responsive
+var size_w = screen.width;
+var size_h = screen.height;
+// console.log("w "+size_w+" h "+size_h);
+if(size_w > 1200){//desktop
+  if(size_h>1024){//big screens
+
+  }
+  else{ //tablets/ipad/desktop
+      oct_size = 150;
+      content_size = 250;
+      min_csize = 50;
+      max_csize = 100;
+  }
+}
+else if(size_w < 1200){
+  if(size_h>1024){//ipad
+
+  }
+  else{//phones
+    oct_size = 280;
+    content_size = 450;
+    min_csize = 80;
+    max_csize = 170;
+  }
+}
 
 function preload(){
   content_arr[0]=loadImage(content1[0]);
@@ -19,13 +56,40 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
   rectMode(CENTER);
   imageMode(CENTER);
   ellipseMode(CENTER);
-  // frameRate(5);
-  positionx = windowWidth-windowWidth;
-  // var m = map(0,0,windowHeight,90,10)
-  positiony = windowHeight-windowHeight;
+  if(size_w > 1200){//desktop
+    if(size_h>1024){//big screens
+
+    }
+    else{ //tablets/ipad/desktop
+        oct_posx = windowWidth-windowWidth;
+        oct_posy = windowHeight-windowHeight-105;
+        button_posy = windowHeight-140;
+        button_posx = windowWidth/2-170;
+        font_size = '24px';
+        infoButton_size = 50;
+        b_radius = '25px'
+    }
+  }
+  else if(size_w < 1200){
+    if(size_h>1024){//ipad
+
+    }
+    else{//phones
+      oct_posx = windowWidth-windowWidth;
+      oct_posy = windowHeight-windowHeight-170;
+      button_posy = windowHeight-300;
+      button_posx = windowWidth/2-170;
+      font_size = '20px';
+      infoButton_size = 60;
+      b_radius = '30px';
+      b_xpos = windowWidth - 200;
+      b_ypos = windowHeight - windowHeight+100;
+    }
+  }
   //info button
   x = windowWidth-500;
   y = 80;
@@ -37,11 +101,11 @@ function setup() {
   rotate(r);
   // var s_size = map(width,width,10,4,5)
   // console.log(s_size)
-  structure_network(positionx,positiony, windowWidth/3,8)
+  structure_network(oct_posx,oct_posy, oct_size,8)
   pop();
 
   push();
-  image(content_arr[0],positionx,positiony,450,450);
+  image(content_arr[0],oct_posx,oct_posy,content_size+18,content_size);
   pop();
 
   //Reaction Buttons
@@ -53,13 +117,12 @@ function setup() {
   radio.option(3, 'Comment');
   radio.option(4, 'Share');
   // // radio.style('width', 'windowWidth/2');
-  radio.style('font-size', '18px')
+  radio.style('font-size', font_size)
   radio.style('checked','2');
   radio.style('color','#ffffff')
   radio.style('border-color', '#ffffff')
-  radio.position(windowWidth/2-150, windowHeight-150);
-  radio.selected('1'); 
-
+  radio.position(button_posx, button_posy);
+  radio.selected('1');
 
   //set the starting color to a dark gray
   r = 50;
@@ -70,23 +133,22 @@ function setup() {
 
 
 function draw() {
-  m_size = map(windowWidth,0,1800,100,200)
+  m_size = map(windowWidth,0,1800,100,200);
   // console.log(m_size)
   var m_xpos = map(x,0,windowWidth,windowWidth-10,windowWidth-300);
   var m_ypos = map(0,0,windowHeight,80,170);
 
-
   //information button
   var col = color(r,g,b);
   button = createButton('i');
-  button.position(m_xpos,m_ypos);
+  button.position(b_xpos,b_ypos);
   button.style('color','#ffffff')
-  button.style('font-size', '20px')
+  button.style('font-size', font_size)
   button.style('border-style', 'groove');
   button.style('border-color', '#ffffff');
   button.style('background-color', col);
-  button.style('border-radius', '12px');
-  button.size(windowWidth/20,windowWidth/20);
+  button.style('border-radius', b_radius);
+  button.size(infoButton_size,infoButton_size);
   button.touchStarted(infoButton);
   button.mousePressed(infoButton); //Touch is not working properly because of this
 
@@ -137,7 +199,7 @@ function structure_network(x, y, radius, npoints) {
     if(sx<0 && sy<0){
       rx1 = random(10,-150);
       ry1 = random(0,-100);
-      r = random(80,150)
+      r = random(min_csize-5,max_csize)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
@@ -145,7 +207,7 @@ function structure_network(x, y, radius, npoints) {
     else if(sx<0 && sy>0){
       rx1 = random(70,-150);
       ry1 = random(20,150);
-      r = random(90,190)
+      r = random(min_csize-5,max_csize+2)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
@@ -154,7 +216,7 @@ function structure_network(x, y, radius, npoints) {
       // console.log(sx + " "+ sy)
       rx1 = random(70,100);
       ry1 = random(20,150);
-      r = random(50,170)
+      r = random(min_csize+20,max_csize-5)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
@@ -162,7 +224,7 @@ function structure_network(x, y, radius, npoints) {
     else if(sx>0 && sy<0){
       rx1 = random(90,150);
       ry1 = random(50,-30);
-      r = random(70,160)
+      r = random(min_csize+10,max_csize-5)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
