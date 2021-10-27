@@ -10,6 +10,8 @@ var x, y, radius,d = 0;
 var r, g, b;
 var m_size;
 var info = false;
+let button;
+let radio;
 
 function preload(){
   content_arr[0]=loadImage(content1[0]);
@@ -25,7 +27,7 @@ function setup() {
   var m = map(0,0,windowHeight,-5,100)
   positiony = windowHeight-windowHeight-m;
   //circular button
-  x = windowWidth-100;
+  x = windowWidth-500;
   y = 80;
   radius = 500;
   background(bg);
@@ -33,15 +35,26 @@ function setup() {
   push();
   // console.log(r)
   rotate(r);
-  polygon(positionx,positiony,350,8)
+  structure_network(positionx,positiony,350,8)
   pop();
 
   push();
   image(content_arr[0],positionx,positiony,650,600);
-  // stroke(60);
-  // strokeWeight(2);
-  // rect(0,0,550,550)
   pop();
+
+  //Reaction Buttons
+  radio = createRadio();
+  radio.style('display', 'inline-block')
+  radio.option(1, 'Ignore');
+  radio.option(2, 'Like');
+  radio.option(3, 'Comment');
+  radio.option(4, 'Share');
+  radio.style('width', 'windowWidth/2');
+  radio.style('font-size', '45px')
+  radio.style('height', 'windowHeight-100');
+  radio.style('color','#ffffff')
+  radio.style('border-color', '#ffffff')
+  radio.position(windowWidth/2-250, windowHeight-200);
 
   //set the starting color to a dark gray
   r = 50;
@@ -55,57 +68,47 @@ function setup() {
 function draw() {
   m_size = map(radius,0,windowWidth,100,30)
   // console.log(m_size)
-  var m_xpos = map(windowWidth,0,windowWidth,windowWidth-10,windowWidth-160);
-  var m_ypos = map(windowHeight,0,windowHeight,100,200);
-  d = dist(mouseX, mouseY, m_xpos, m_ypos);
-  //if the mouse is over the circle
-  if (d < m_size) {
-    //turn the fill on for 'mouse over' effect
-    stroke(225);
-    strokeWeight(9);
-    fill(r,g,b);
-    // console.log("over");
-  }
-  else{ //if it isn't over the circle
-    //set the fill to (r,g,b) for 'mouse over' effect
-    stroke(220);
-    strokeWeight(1);
-    fill(r,g,b);
-  }
+  var m_xpos = map(x,0,windowWidth,windowWidth-10,windowWidth-300);
+  var m_ypos = map(0,0,windowHeight,150,200);
 
-  ellipse(m_xpos, m_ypos, m_size, m_size);
-  push();
 
-  textSize(m_size-14);
-  fill(255)
-  strokeWeight(2)
-  text("i",m_xpos-6,m_ypos+22)
-  pop();
-  console.log(info);
-  // noLoop();
+  //information button
+  var col = color(r,g,b);
+  button = createButton('i');
+  button.position(m_xpos,m_ypos);
+  button.style('color','#ffffff')
+  button.style('font-size', '35px')
+  button.style('border-style', 'groove');
+  button.style('border-color', '#ffffff');
+  button.style('background-color', col);
+  button.style('border-radius', '12px');
+  button.size(m_size,m_size);
+  button.touchStarted(infoButton);
+  button.mousePressed(infoButton); //Touch is not working properly because of this
 }
 
-function mousePressed(){
-
+//Information button event
+function infoButton(){
   if (d < m_size) {
-    // info=true;
-    //set the red, green, and blue variables to a random value
-    if(info == true){
-      r = 50;
-      g = 50;
-      b = 50;
-      info = false;
-    }
-    else if(info==false){
+    if(r<=50){
       r = 80;
       g = 80;
       b = 80;
       info = true;
+      // console.log("on");
+    }
+    else if(r>=50){
+      r = 50;
+      g = 50;
+      b = 50;
+      info = false;
+      // console.log("off");
     }
   }
 }
 
-function polygon(x, y, radius, npoints) {
+//network design behind post
+function structure_network(x, y, radius, npoints) {
   let angle = TWO_PI / npoints;
   beginShape();
   for (let a = 0; a < TWO_PI; a += angle) {
@@ -152,21 +155,3 @@ function polygon(x, y, radius, npoints) {
   }
   endShape(CLOSE);
 }
-
-// function network(x1,y1,vertex_a){
-//   push();
-//   fill(bg)
-//   var r = random(150,200);
-//   ellipse(x1+105, y1+410,r,r);
-//   line_x1= x1+100+r/2;
-//   line_y1=y1+410+r/2;
-//   // for(var j = 0; j < random(4,9); j++){
-//   //
-//   //     line(line_x1,line_y1, x1+line_lengthx, y1+line_lengthy);
-//   //     line_lengthx = random(95,150);
-//   //     line_lengthy = random(500,550);
-//   //     var r2 = random(20,50);
-//   //     ellipse(x1+line_lengthx,y1+line_lengthy,r2,r2);
-//   // }
-// pop();
-// }
