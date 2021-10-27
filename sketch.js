@@ -24,37 +24,38 @@ function setup() {
   ellipseMode(CENTER);
   // frameRate(5);
   positionx = windowWidth-windowWidth;
-  var m = map(0,0,windowHeight,-5,100)
+  var m = map(0,0,windowHeight,90,10)
   positiony = windowHeight-windowHeight-m;
-  //circular button
+  //info button
   x = windowWidth-500;
   y = 80;
-  radius = 500;
+  radius = 50;
   background(bg);
   translate(windowWidth/2,windowHeight/2)
   push();
   // console.log(r)
   rotate(r);
-  structure_network(positionx,positiony,350,8)
+  structure_network(positionx,positiony,150,8)
   pop();
 
   push();
-  image(content_arr[0],positionx,positiony,650,600);
+  image(content_arr[0],positionx,positiony,250,250);
   pop();
 
   //Reaction Buttons
   radio = createRadio();
-  radio.style('display', 'inline-block')
+  radio.class("radioButton");
+  // radio.style('display', 'inline-block')
   radio.option(1, 'Ignore');
   radio.option(2, 'Like');
   radio.option(3, 'Comment');
   radio.option(4, 'Share');
-  radio.style('width', 'windowWidth/2');
-  radio.style('font-size', '45px')
-  radio.style('height', 'windowHeight-100');
+  // // radio.style('width', 'windowWidth/2');
+  radio.style('font-size', '18px')
+  // // radio.style('height', 'windowHeight-100');
   radio.style('color','#ffffff')
   radio.style('border-color', '#ffffff')
-  radio.position(windowWidth/2-250, windowHeight-200);
+  radio.position(windowWidth/2-200, windowHeight-150);
 
   //set the starting color to a dark gray
   r = 50;
@@ -66,10 +67,10 @@ function setup() {
 
 
 function draw() {
-  m_size = map(radius,0,windowWidth,100,30)
+  m_size = map(radius,0,windowWidth,40,20)
   // console.log(m_size)
   var m_xpos = map(x,0,windowWidth,windowWidth-10,windowWidth-300);
-  var m_ypos = map(0,0,windowHeight,150,200);
+  var m_ypos = map(0,0,windowHeight,80,170);
 
 
   //information button
@@ -77,7 +78,7 @@ function draw() {
   button = createButton('i');
   button.position(m_xpos,m_ypos);
   button.style('color','#ffffff')
-  button.style('font-size', '35px')
+  button.style('font-size', '20px')
   button.style('border-style', 'groove');
   button.style('border-color', '#ffffff');
   button.style('background-color', col);
@@ -121,33 +122,33 @@ function structure_network(x, y, radius, npoints) {
     fill(255);
     if(sx<0 && sy<0){
       rx1 = random(10,-150);
-      ry1 = random(0,-150);
-      r = random(100,250)
+      ry1 = random(0,-100);
+      r = random(50,100)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
     }
     else if(sx<0 && sy>0){
-      rx1 = random(70,-100);
-      ry1 = random(20,200);
-      r = random(100,250)
+      rx1 = random(70,-150);
+      ry1 = random(20,150);
+      r = random(50,100)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
     }
     else if(sx>0 && sy>0){
       console.log(sx + " "+ sy)
-      rx1 = random(70,200);
-      ry1 = random(20,200);
-      r = random(100,250)
+      rx1 = random(70,100);
+      ry1 = random(20,150);
+      r = random(50,100)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
     }
     else if(sx>0 && sy<0){
-      rx1 = random(90,200);
-      ry1 = random(50,-200);
-      r = random(100,250)
+      rx1 = random(90,150);
+      ry1 = random(50,-30);
+      r = random(50,100)
       line(sx,sy,sx+rx1,sy+ry1);
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
