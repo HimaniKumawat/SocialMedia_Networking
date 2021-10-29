@@ -1,10 +1,23 @@
 var r = 0;
-var content1 = [];
-content1 = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG'];
-var content_arr=[];
+var cnv;
+var clear_setup = false;
+var content_misleading = [];
+var content_corrected = [];
+content_misleading = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/WhatsApp%20Image%202021-10-29%20at%2012.42.52%20PM.jpeg',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/netflix_fake.jpg',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic_fake.jpg'];
+content_corrected = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/headline_1_fixed.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/left_right_center.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/newsheadline_fized.JPG']
+var contentmis_arr=[];
+var contentcor_arr=[];
 var bg = 20;
 var line_x1, line_y1, line_lengthx, line_lengthy = 0;
 var r, g, b;
+var s = 0;
+var img;
 var info = false;
 let button, radio, reaction;
 var font_size;
@@ -28,10 +41,10 @@ if(size_w > 1200){//desktop
 
   }
   else{ //tablets/ipad/desktop
-      oct_size = 150;
-      content_size = 250;
-      min_csize = 50;
-      max_csize = 100;
+    oct_size = 150;
+    content_size = 250;
+    min_csize = 50;
+    max_csize = 100;
   }
 }
 else if(size_w < 1200){
@@ -47,40 +60,50 @@ else if(size_w < 1200){
 }
 
 function preload(){
-  content_arr[0]=loadImage(content1[0]);
+  for(var c = 0; c<content_misleading.length; c++){
+  contentmis_arr[c]=loadImage(content_misleading[c]);
+}
+for(var m = 0; m<content_corrected.length; m++){
+contentcor_arr[m]=loadImage(content_corrected[m]);
+}
+
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+
+  cnv = createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
   imageMode(CENTER);
   ellipseMode(CENTER);
   // frameRate(60);
 
+if(clear_setup == false){
   //Responsive position
   if(size_w > 1200){//desktop
     if(size_h>1024){//big screens
 
     }
     else{ //tablets/ipad/desktop
-        oct_posx = windowWidth-windowWidth;
-        oct_posy = windowHeight-windowHeight-60;
-        button_posy = windowHeight-120;
-        button_posx = windowWidth/2-220;
-        font_size = '24px';
-        infoButton_size = 50;
-        ib_radius = '25px';
-        ib_xpos =  250;
-        ib_ypos = windowHeight - windowHeight+80;
-        timer_buttonx = windowWidth - 350;
-        timer_buttony = windowHeight - windowHeight+80;
-        timefont_size = '22px';
-        timer_radius = '50px';
-        timer_buttonsize = infoButton_size+20;
-        arc_posx=timer_buttonx+35;
-        arc_posy= timer_buttony+35;
-        stroke_arc = 3;
-        arc_size = timer_buttonsize+20;
+      oct_posx = windowWidth-windowWidth;
+      oct_posy = windowHeight-windowHeight-60;
+      button_posy = windowHeight-120;
+      button_posx = windowWidth/2-220;
+      font_size = '24px';
+      infoButton_size = 50;
+      ib_radius = '25px';
+      ib_xpos =  250;
+      ib_ypos = windowHeight - windowHeight+80;
+      timer_buttonx = windowWidth - 350;
+      timer_buttony = windowHeight - windowHeight+80;
+      timefont_size = '22px';
+      timer_radius = '50px';
+      timer_buttonsize = infoButton_size+20;
+      arc_posx=timer_buttonx+35;
+      arc_posy= timer_buttony+35;
+      stroke_arc = 3;
+      arc_size = timer_buttonsize+20;
+      next_xpos = windowWidth - 345;
+      next_ypos = windowHeight - 440;
     }
   }
   else if(size_w < 1200){
@@ -91,21 +114,23 @@ function setup() {
       oct_posx = windowWidth-windowWidth;
       oct_posy = windowHeight-windowHeight-100;
       button_posy = windowHeight-300;
-      button_posx = windowWidth/2-400;
-      font_size = '50px';
+      button_posx = windowWidth/2-350;
+      font_size = '45px';
       infoButton_size = 60;
       ib_radius = '40px';
       ib_xpos = 150;
       ib_ypos = windowHeight - windowHeight+150;
       timer_buttonx = windowWidth - 300;
       timer_buttony = windowHeight - windowHeight+120;
-      timefont_size = '45px';
+      timefont_size = '42px';
       timer_radius = '60px';
       timer_buttonsize = infoButton_size+60;
       arc_posx=timer_buttonx+60;
       arc_posy= timer_buttony+60;
       stroke_arc = 5;
       arc_size = timer_buttonsize+40;
+      next_xpos = windowWidth - 200;
+      next_ypos = windowHeight - 1000;
     }
   }
 
@@ -115,10 +140,8 @@ function setup() {
   rotate(r);
   structure_network(oct_posx,oct_posy, oct_size,8)
   pop();
+  img = contentmis_arr[0];
 
-  push();
-  image(content_arr[0],oct_posx,oct_posy,content_size+18,content_size);
-  pop();
 
   //Reaction Buttons
   radio = createRadio();
@@ -142,24 +165,6 @@ function setup() {
   b = 50;
   strokeWeight(2);
   angleMode(DEGREES)
-}
-
-
-function draw() {
-
-  d = dist(mouseX, mouseY, ib_xpos, ib_ypos);
-
-  //information button
-  var col = color(r,g,b);
-  button = createButton('i');
-  button.position(ib_xpos,ib_ypos);
-  button.style('color','#ffffff')
-  button.style('font-size', font_size)
-  button.style('border-style', 'groove');
-  button.style('border-color', '#ffffff');
-  button.style('background-color', col);
-  button.style('border-radius', ib_radius);
-  button.size(infoButton_size,infoButton_size);
 
   timer_button = createButton('Start')
   timer_button.position(timer_buttonx,timer_buttony)
@@ -173,8 +178,17 @@ function draw() {
   timer_button.mousePressed(timerCountdown);
   // console.log(timer_start);
 
-
-
+  //information button
+  var col = color(r,g,b);
+  button = createButton('i');
+  button.position(ib_xpos,ib_ypos);
+  button.style('color','#ffffff')
+  button.style('font-size', font_size)
+  button.style('border-style', 'groove');
+  button.style('border-color', '#ffffff');
+  button.style('background-color', col);
+  button.style('border-radius', ib_radius);
+  button.size(infoButton_size,infoButton_size);
 
   if(radio.value() == 1){
     if(info == false){
@@ -182,8 +196,8 @@ function draw() {
       g = 50;
       b = 50;
     }
-      // button.touchStarted(infoButton);  //not working properly
-      button.mousePressed(infoButton);
+    // button.touchStarted(infoButton);  //not working properly
+    button.mousePressed(infoButton);
   }
   else{
     r = 120;
@@ -192,44 +206,120 @@ function draw() {
     info = false;
   }
 
-//Record the reaction and animation
-if(radio.value() == 1){
-  if(info == true){
-    reaction = "More information";
+    nextbutton = createButton('>');
+    nextbutton.position(next_xpos,next_ypos);
+    nextbutton.style('color','#ffffff')
+    nextbutton.style('font-size', font_size)
+    nextbutton.style('border-style', 'groove');
+    nextbutton.style('border-color', '#ffffff');
+    nextbutton.style('background-color', col);
+    nextbutton.style('border-radius', ib_radius);
+    nextbutton.size(infoButton_size,infoButton_size);
+    nextbutton.mousePressed(imageChange);
+}
+}
+
+
+function draw() {
+
+if(clear_setup == false){
+  push();
+  translate(windowWidth/2,windowHeight/2)
+  image(img,oct_posx,oct_posy,content_size+18,content_size);
+  pop();
+
+  d = dist(mouseX, mouseY, ib_xpos, ib_ypos);
+  //Record the reaction and animation
+  if(radio.value() == 1){
+    if(info == true){
+      reaction = "More information";
+    }
+    else{
+      reaction = "Ignore";
+    }
   }
   else{
-    reaction = "Ignore";
+    if(radio.value()==2){
+      reaction = "Like";
+    }
+    else if(radio.value()==3){
+      reaction = "Comment";
+    }
+    else if(radio.value()==4){
+      reaction = "Share";
+    }
+    else if(radio.value()==5){
+      reaction = "Report";
+    }
   }
+
+  if(radio.value() == 1){
+    if(info == false){
+      r = 50;
+      g = 50;
+      b = 50;
+      col = color(r,g,b);
+      button.style('background-color', col);
+    }
+    // button.touchStarted(infoButton);  //not working properly
+    button.mousePressed(infoButton);
+  }
+  else{
+    r = 120;
+    b = 120;
+    g = 120;
+    info = false;
+    col = color(r,g,b);
+    button.style('background-color', col);
+  }
+  // console.log(reaction);
+
+  // console.log(reaction);
 }
 else{
-  if(radio.value()==2){
-    reaction = "Like";
-  }
-  else if(radio.value()==3){
-    reaction = "Comment";
-  }
-  else if(radio.value()==4){
-    reaction = "Share";
-  }
-  else if(radio.value()==5){
-    reaction = "Report";
-  }
+  clear();
+  redraw();
+  push();
+  fill(20);
+  rect(0,0,windowWidth+windowWidth,windowHeight+windowHeight);
+  pop();
+  button.hide();
+  timer_button.hide();
+  nextbutton.hide();
+  radio.hide();
 }
-  // console.log(reaction);
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+//image change
+function imageChange(){
+  s = s+1;
+  // console.log(s);
+  img = contentmis_arr[s];
+  if(s == contentmis_arr.length-1){
+    results();
+  }
+}
+
+function results(){
+  noLoop();
+  // cnv.reset();
+  clear();
+  clear_setup = true;
+  // console.log("Results");
+}
 //timer
 function timerCountdown() {
   color_start = '#222222';
+  timer_button.style('background-color', color_start);
   timer_start = true;
   setInterval(function() {
     if (timervalue < seconds_time) {
       timervalue++;
-      console.log(timervalue);
+      // console.log(timervalue);
       seconds = map(timervalue,0,seconds_time,0,360);
       push();
       stroke('white')
@@ -245,6 +335,7 @@ function timerCountdown() {
 
 //Information button event
 function infoButton(){
+
   if (d < infoButton_size) {
     if(info == false){
       r = 80;
@@ -261,6 +352,8 @@ function infoButton(){
       // console.log("off");
     }
   }
+  col = color(r,g,b);
+  button.style('background-color', col);
 }
 
 //network design behind post
@@ -272,7 +365,7 @@ function structure_network(x, y, radius, npoints) {
     let sy = y + sin(a) * radius;
     vertex(sx, sy);
 
-    stroke(255);
+    stroke(160);
     fill(255);
     if(sx<0 && sy<0){
       rx1 = random(10,-150);
