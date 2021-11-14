@@ -4,13 +4,13 @@ var clear_setup = false;
 var content_misleading = [];
 var content_corrected = [];
 content_misleading = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/WhatsApp%20Image%202021-10-29%20at%2012.42.52%20PM.jpeg',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/netflix_fake.jpg',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic_fake.jpg'];
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic_fake.jpg',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/WhatsApp%20Image%202021-10-29%20at%2012.42.52%20PM.jpeg'];
 content_corrected = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/headline_1_fixed.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/left_right_center.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/newsheadline_fized.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic.JPG']
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/left_right_center.JPG',];
 var contentmis_arr=[];
 var contentcor_arr=[];
 var bg = 20;
@@ -31,9 +31,8 @@ var timer_buttonx, timer_buttony, timer_button,count1, count, seconds, timefont_
 var timeline = 1;
 var timer_start = false;
 var timervalue = 0;
-var seconds_time = 60;
+var seconds_time = 60;  //seconds
 var color_start = '#ffffff';
-
 
 
 function preload(){
@@ -47,7 +46,6 @@ function preload(){
 }
 
 function setup() {
-
   cnv = createCanvas(windowWidth, windowHeight);
   background(bg);
   rectMode(CENTER);
@@ -134,10 +132,8 @@ function setup() {
     }
   }
 
-  // console.log(oct_size, size_h)
-  // frameRate(60);
   if(clear_setup == false){
-    //Responsive position
+
     background(bg);
     translate(windowWidth/2,windowHeight/2)
     push();
@@ -146,11 +142,8 @@ function setup() {
     pop();
     img = contentmis_arr[0];
 
-
     //Reaction Buttons
     radio = createRadio();
-    // radio.class("radioButton");
-    // radio.style('display', 'inline-block')
     radio.option(1, 'Ignore');
     radio.option(2, 'Like');
     radio.option(3, 'Comment');
@@ -170,6 +163,7 @@ function setup() {
     strokeWeight(2);
     angleMode(DEGREES)
 
+    //timer button
     timer_button = createButton('Start')
     timer_button.position(timer_buttonx,timer_buttony)
     timer_button.size(timer_buttonsize,timer_buttonsize);
@@ -179,8 +173,8 @@ function setup() {
     timer_button.style('border-radius', timer_radius);
     timer_button.style('background-color', color_start);
     // timer_button.touchStarted(timer);
+    timer_start = true;
     timer_button.mousePressed(timerCountdown);
-    // console.log(timer_start);
 
     //information button
     var col = color(r,g,b);
@@ -193,7 +187,6 @@ function setup() {
     button.style('background-color', col);
     button.style('border-radius', ib_radius);
     button.size(infoButton_size,infoButton_size);
-
     if(radio.value() == 1){
       if(info == false){
         r = 50;
@@ -210,6 +203,7 @@ function setup() {
       info = false;
     }
 
+    //next post
     nextbutton = createButton('>');
     nextbutton.position(next_xpos,next_ypos);
     nextbutton.style('color','#ffffff')
@@ -385,9 +379,9 @@ function draw() {
     translate(windowWidth/2,windowHeight/2)
     clear_setup = true;
     if(setup_run == true){
-    setup();
-    console.log("Run setup");
-    setup_run = false;
+      setup();
+      console.log("Run setup");
+      setup_run = false;
     }
 
     button.hide();
@@ -408,9 +402,6 @@ function draw() {
     // console.log(dot);
     ellipse(-420,-yt-8+ dot, 10,10)
     pop();
-    // image(contentcor_arr[0],-300,-150,250,250);
-    // image(contentcor_arr[1],-300,150,250,250);
-
     push();
     translate(windowWidth/2,windowHeight/2)
     image(img,oct_posx+50,oct_posy+20,content_size+50,content_size+55);
@@ -422,31 +413,32 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-//image change
+//Image change
 function imageChange(){
-    if(clear_setup == false){
-  console.log("Image change");
-  s = s+1;
-  img = contentmis_arr[s];
-  if(s == contentmis_arr.length){
-    results();
-    clear_setup = true;
+  if(clear_setup == false){
+    console.log("Image change");
+    s = s+1;
+    img = contentmis_arr[s];
+    if(s == contentmis_arr.length){
+      results();
+      clear_setup = true;
+    }
   }
-}
-else {
-  // console.log("Image change Corrected");
-  s = s+1;
-  // console.log(s)
-  dot = dot + 36;
-  img = contentcor_arr[s];
-  if(s == contentcor_arr.length){
-    s=0;
-    dot = 0;
+  else {
+    // console.log("Image change Corrected");
+    s = s+1;
+    // console.log(s)
+    dot = dot + 36;
     img = contentcor_arr[s];
+    if(s == contentcor_arr.length){
+      s=0;
+      dot = 0;
+      img = contentcor_arr[s];
+    }
   }
-}
 }
 
+//result page
 function results(){
   // noLoop();
   console.log("results");
@@ -457,26 +449,38 @@ function results(){
   setup_run = true;
   // console.log("Results");
 }
+
 //timer
 function timerCountdown() {
   color_start = '#222222';
   timer_button.style('background-color', color_start);
-  timer_start = true;
-  setInterval(function() {
-    if (timervalue < seconds_time) {
-      timervalue++;
-      // console.log(timervalue);
-      seconds = map(timervalue,0,seconds_time,0,360);
-      push();
-      stroke('white')
-      strokeWeight(stroke_arc)
-      noFill();
-      arc(arc_posx,arc_posy,arc_size,arc_size,0,seconds);
-      pop();
-    }else{
-      timer_start = false;
-    }
-  }, 1000);
+  if(timervalue>=0 && timer_start == true){
+    setInterval(function() {
+      if (timervalue < seconds_time) {
+        timervalue++;
+        // console.log(timervalue);
+        seconds = map(timervalue,0,seconds_time,0,360);
+        push();
+        stroke('white')
+        strokeWeight(stroke_arc)
+        noFill();
+        arc(arc_posx,arc_posy,arc_size,arc_size,0,seconds);
+        pop();
+      }else{
+        timer_start = false;
+        console.log("Timer end");
+        // clear_setup = true;
+        // results();
+        // clear_setup = true;
+        // setup_run = true;
+      }
+    }, 1000);
+  }
+  else{
+    timer_start = false
+    results();
+    clear_setup = true;
+  }
 }
 
 //Information button event
@@ -541,7 +545,7 @@ function structure_network(x, y, radius, npoints) {
       push();
       if(clear_setup == true){
         var highlight = int(random(0,5));
-        if(highlight >= 2){
+        if(highlight >= 3){
           stroke(random(210,255));
           noFill();
           ellipse(sx+rx1-5, sy+ry1-10,r+9,r+9);
