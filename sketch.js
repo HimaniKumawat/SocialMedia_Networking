@@ -33,6 +33,10 @@ var timer_start = false;
 var timervalue = 0;
 var seconds_time = 60;  //seconds
 var color_start = '#ffffff';
+var arr_sx=[];
+var arr_sy=[];
+var highlight_circlex = 0;
+var highlight_circley = 0;
 
 
 function preload(){
@@ -237,14 +241,6 @@ function setup() {
     nextbutton.mousePressed(imageChange);
     pop();
 
-    // push();
-    // rotate(r);
-    // console.log("setup results");
-    // angleMode(RADIANS);
-    // structure_network(oct_posx,oct_posy, oct_size,8)
-    // pop();
-
-
     push();
     noFill();
     translate(windowWidth/2,windowHeight/2)
@@ -372,6 +368,38 @@ function draw() {
         }
       }
     }
+    if(radio.value() == 2 || radio.value() == 3 || radio.value() == 4 || info == true){
+
+      if(radio.value()==2){
+        highlight_circlex = arr_sx[radio.value()]+rx1+400;
+        highlight_circley = arr_sy[radio.value()]+ry1+50;
+      }
+      else if (radio.value()==3) {
+        highlight_circlex = arr_sx[radio.value()]+rx1+800;
+        highlight_circley = arr_sy[radio.value()]+ry1+60;
+      }
+      else if (radio.value()==4) {
+        highlight_circlex = arr_sx[radio.value()]+rx1+1000;
+        highlight_circley = arr_sy[radio.value()]+ry1+500;
+      }
+      var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
+      if(dis < (r+5)/2){
+        image(contentcor_arr[s],260,300,content_size+50,content_size+55);
+      }
+      else{
+        fill(bg);
+        noStroke();
+        rect(260,300,content_size+50,content_size+55)
+      }
+      stroke(255,0,0);
+      noFill();
+    }
+    else{
+      noFill();
+      noStroke();
+    }
+
+    ellipse(highlight_circlex, highlight_circley,r-15,r-15);
   }
   else{
     // clear();
@@ -400,7 +428,8 @@ function draw() {
     }
 
     // console.log(dot);
-    ellipse(-420,-yt-8+ dot, 10,10)
+    fill(255);
+    ellipse(-420,-yt-8+ dot, 10,10) //highlights result reaction
     pop();
     push();
     translate(windowWidth/2,windowHeight/2)
@@ -510,11 +539,16 @@ function infoButton(){
 function structure_network(x, y, radius, npoints) {
 
   let angle = TWO_PI / npoints;
+  var num = 0
   beginShape();
   for (let a = 0; a < TWO_PI; a += angle) {
     let sx = x + cos(a) * radius;
     let sy = y + sin(a) * radius;
-    // console.log(sx);
+
+    arr_sx[num]=sx;
+    arr_sy[num]=sy;
+    num++;
+
     vertex(sx, sy);
     stroke(160);
     fill(255);
@@ -532,6 +566,7 @@ function structure_network(x, y, radius, npoints) {
           ellipse(sx+rx1-5, sy+ry1-10,r+15,r+15);
         }
       }
+
       pop();
       fill(bg);
       ellipse(sx+rx1-5, sy+ry1-10,r,r);
