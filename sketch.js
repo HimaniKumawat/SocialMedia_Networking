@@ -1,25 +1,41 @@
-var r = 0;
+var rotate_r = 0;
 var cnv;
 var clear_setup = false;
 var content_misleading = [];
 var content_corrected = [];
+var background_images = [];
+
 content_misleading = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/netflix_fake.jpg',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic_fake.jpg',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/WhatsApp%20Image%202021-10-29%20at%2012.42.52%20PM.jpeg'];
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/facebook_misleading.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/tourism_misleading.JPG'];
+
 content_corrected = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/headline_1_fixed.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/newsheadline_fized.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/left_right_center.JPG',];
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/facebook_fixed.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/tourism_fixed.JPG'];
+
+background_images = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background1.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background2.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background3.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background4.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background5.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background6.JPG'];
+
 var contentmis_arr=[];
 var contentcor_arr=[];
+var bg_imagesarr=[];
 var bg = 20;
 var line_x1, line_y1, line_lengthx, line_lengthy = 0;
 var r, g, b;
 var s = 0;
 var img;
 var info = false;
-let button, radio, reaction;
+let button, reaction;
+var radio;
 var reaction_arr = [];
 var font_size;
 var infoButton_size, ib_radius, ib_xpos, ib_ypos, d;
@@ -31,13 +47,14 @@ var timer_buttonx, timer_buttony, timer_button,count1, count, seconds, timefont_
 var timeline = 1;
 var timer_start = false;
 var timervalue = 0;
-var seconds_time = 60;  //seconds
+var seconds_time = 120;  //seconds
 var color_start = '#ffffff';
 var arr_sx=[];
 var arr_sy=[];
 var highlight_circlex = 0;
 var highlight_circley = 0;
-
+var radio_selection = false;
+var message = ["Misinformation can be in anyform. It can be content with misleading headlines or one sided infomration...","Information is turned and twisted to get more attention. Every like, comment or share spreads it to other people...", "Not just restricted to text, images can also be used to maniplulate your decisions, which is why 'thinking' before reacting is important...","Out of the 5 obvious options that were presented to you, before interacting with any of those you should always look at other sources and then decide whether to like, comment, share or report...","Ignoring doesn't spread the information but the best option to reduce the spread is to report whenever you come across one."]
 
 function preload(){
   for(var c = 0; c<content_misleading.length; c++){
@@ -46,8 +63,20 @@ function preload(){
   for(var m = 0; m<content_corrected.length; m++){
     contentcor_arr[m]=loadImage(content_corrected[m]);
   }
+  for(var bi = 0; bi<background_images.length; bi++){
+    bg_imagesarr[bi]=loadImage(background_images[bi]);
+  }
 
 }
+
+function network(){
+  translate(windowWidth/2,windowHeight/2)
+  push();
+  rotate(rotate_r);
+  structure_network(oct_posx,oct_posy, oct_size,8)
+  pop();
+}
+
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
@@ -55,95 +84,13 @@ function setup() {
   rectMode(CENTER);
   imageMode(CENTER);
   ellipseMode(CENTER);
-  //responsive size
-  var size_w = screen.width;
-  var size_h = screen.height;
-  if(size_w > 1200){//desktop
-    if(size_h>1024){//big screens
 
-    }
-    else{ //tablets/ipad/desktop
-      oct_size = 150;
-      content_size = 250;
-      min_csize = 50;
-      max_csize = 100;
-    }
-  }
-  else if(size_w < 1200){
-    if(size_h>1024){//ipad
-
-    }
-    else{//phones
-      oct_size = 300;
-      content_size = 500;
-      min_csize = 80;
-      max_csize = 190;
-    }
-  }
-
-  if(size_w > 1200){//desktop
-    if(size_h>1024){//big screens
-
-    }
-    else{ //tablets/ipad/desktop
-      oct_posx = windowWidth-windowWidth;
-      oct_posy = windowHeight-windowHeight-60;
-      button_posy = windowHeight-120;
-      button_posx = windowWidth/2-220;
-      font_size = '24px';
-      infoButton_size = 50;
-      ib_radius = '25px';
-      ib_xpos =  250;
-      ib_ypos = windowHeight - windowHeight+80;
-      timer_buttonx = windowWidth - 350;
-      timer_buttony = windowHeight - windowHeight+80;
-      timefont_size = '22px';
-      timer_radius = '50px';
-      timer_buttonsize = infoButton_size+20;
-      arc_posx=timer_buttonx+35;
-      arc_posy= timer_buttony+35;
-      stroke_arc = 3;
-      arc_size = timer_buttonsize+20;
-      next_xpos = windowWidth - 345;
-      next_ypos = windowHeight - 440;
-    }
-  }
-  else if(size_w < 1200){
-    if(size_h>1024){//ipad
-
-    }
-    else{//phones
-      oct_posx = windowWidth-windowWidth;
-      oct_posy = windowHeight-windowHeight-100;
-      button_posy = windowHeight-300;
-      button_posx = windowWidth/2-400;
-      font_size = '45px';
-      infoButton_size = 60;
-      ib_radius = '40px';
-      ib_xpos = 150;
-      ib_ypos = windowHeight - windowHeight+150;
-      timer_buttonx = windowWidth - 300;
-      timer_buttony = windowHeight - windowHeight+120;
-      timefont_size = '42px';
-      timer_radius = '60px';
-      timer_buttonsize = infoButton_size+60;
-      arc_posx=timer_buttonx+60;
-      arc_posy= timer_buttony+60;
-      stroke_arc = 5;
-      arc_size = timer_buttonsize+40;
-      next_xpos = windowWidth - 200;
-      next_ypos = windowHeight - 1000;
-    }
-  }
+  initialize();
 
   if(clear_setup == false){
 
     background(bg);
-    translate(windowWidth/2,windowHeight/2)
-    push();
-    rotate(r);
-    structure_network(oct_posx,oct_posy, oct_size,8)
-    pop();
+    network();  //formatting
     img = contentmis_arr[0];
 
     //Reaction Buttons
@@ -180,9 +127,9 @@ function setup() {
     timer_start = true;
     timer_button.mousePressed(timerCountdown);
 
-    //information button
+    //Analysis button
     var col = color(r,g,b);
-    button = createButton('i');
+    button = createButton('Results Overview');
     button.position(ib_xpos,ib_ypos);
     button.style('color','#ffffff')
     button.style('font-size', font_size)
@@ -190,22 +137,23 @@ function setup() {
     button.style('border-color', '#ffffff');
     button.style('background-color', col);
     button.style('border-radius', ib_radius);
-    button.size(infoButton_size,infoButton_size);
-    if(radio.value() == 1){
-      if(info == false){
-        r = 50;
-        g = 50;
-        b = 50;
-      }
-      // button.touchStarted(infoButton);  //not working properly
-      button.mousePressed(infoButton);
-    }
-    else{
-      r = 120;
-      b = 120;
-      g = 120;
-      info = false;
-    }
+    button.size('200px','100px');
+    button.hide();
+    // if(radio.value() == 1){
+    //   if(info == false){
+    //     r = 50;
+    //     g = 50;
+    //     b = 50;
+    //   }
+    //   // button.touchStarted(infoButton);  //not working properly
+    //   button.mousePressed(infoButton);
+    // }
+    // else{
+    //   r = 120;
+    //   b = 120;
+    //   g = 120;
+    //   info = false;
+    // }
 
     //next post
     nextbutton = createButton('>');
@@ -215,7 +163,7 @@ function setup() {
     nextbutton.style('border-style', 'groove');
     nextbutton.style('border-color', '#ffffff');
     nextbutton.style('background-color', col);
-    nextbutton.style('border-radius', ib_radius);
+    nextbutton.style('border-radius', '25px');
     nextbutton.size(infoButton_size,infoButton_size);
     nextbutton.mousePressed(imageChange);
 
@@ -236,7 +184,7 @@ function setup() {
     nextbutton.style('border-style', 'groove');
     nextbutton.style('border-color', '#ffffff');
     nextbutton.style('background-color', col);
-    nextbutton.style('border-radius', ib_radius);
+    nextbutton.style('border-radius','25px'); // ib_radius
     nextbutton.size(infoButton_size,infoButton_size);
     nextbutton.mousePressed(imageChange);
     pop();
@@ -245,7 +193,7 @@ function setup() {
     noFill();
     translate(windowWidth/2,windowHeight/2)
     stroke('white');
-    rotate(r);
+    // rotate(rotate_r);
     // a=0;
     angleMode(RADIANS);
     console.log("Draw Network");
@@ -281,7 +229,8 @@ function setup() {
         yt = 130;
       }
     }
-    structure_network(oct_posx,oct_posy, oct_size,8);
+    // network();
+    structure_network(oct_posx+50,oct_posy, oct_size,8)
     pop();
   }
 }
@@ -290,22 +239,25 @@ function setup() {
 function draw() {
 
   if(clear_setup == false){
+
     push();
     translate(windowWidth/2,windowHeight/2)
-    image(img,oct_posx,oct_posy,content_size+18,content_size);
+    image(img,oct_posx,oct_posy,content_size+30,content_size+20);
     pop();
+
+      button.mousePressed(resultButton);
 
     d = dist(mouseX, mouseY, ib_xpos, ib_ypos);
     //Record the reaction and animation
-    if(radio.value() == 1){
-      if(info == true){
-        reaction = "More information";
-      }
-      else{
-        reaction = "Ignore";
-      }
-    }
-    else{
+    // if(radio.value() == 1){
+    //   if(info == true){
+    //     reaction = "More information";
+    //   }
+    //   else{
+    //     reaction = "Ignore";
+    //   }
+    // }
+    // else{
       if(radio.value()==2){
         reaction = "Like";
       }
@@ -318,42 +270,45 @@ function draw() {
       else if(radio.value()==5){
         reaction = "Report";
       }
-    }
-
-    if(radio.value() == 1){
-      if(info == false){
-        r = 50;
-        g = 50;
-        b = 50;
-        col = color(r,g,b);
-        button.style('background-color', col);
+      else if(radio.value()==1){
+        reaction = "Ignore";
       }
-      // button.touchStarted(infoButton);  //not working properly
-      button.mousePressed(infoButton);
-    }
-    else{
-      r = 120;
-      b = 120;
-      g = 120;
-      info = false;
-      col = color(r,g,b);
-      button.style('background-color', col);
-    }
+    // }
+
+    // if(radio.value() == 1){
+    //   if(info == false){
+    //     r = 50;
+    //     g = 50;
+    //     b = 50;
+    //     col = color(r,g,b);
+    //     button.style('background-color', col);
+    //   }
+    //   // button.touchStarted(infoButton);  //not working properly
+    //   button.mousePressed(infoButton);
+    // }
+    // else{
+    //   r = 120;
+    //   b = 120;
+    //   g = 120;
+    //   info = false;
+    //   col = color(r,g,b);
+    //   button.style('background-color', col);
+    // }
     // console.log(reaction);
 
 
     if(s<=content_misleading.length){
       // console.log(reaction_arr);
       // console.log(s);
-      if(radio.value() == 1){
-        if(info == true){
-          reaction_arr[s] = "More Information";
-        }
-        else{
-          reaction_arr[s]="Ignore";
-        }
-      }
-      else{
+      // if(radio.value() == 1){
+      //   if(info == true){
+      //     reaction_arr[s] = "More Information";
+      //   }
+      //   else{
+      //     reaction_arr[s]="Ignore";
+      //   }
+      // }
+      // else{
         if(radio.value() == 2){
           reaction_arr[s]="Like";
         }
@@ -366,30 +321,45 @@ function draw() {
         else if(radio.value() == 5){
           reaction_arr[s]="Report";
         }
-      }
+        else if(radio.value() == 1){
+          reaction_arr[s]="Ignore";
+        }
+      // }
     }
-    if(radio.value() == 2 || radio.value() == 3 || radio.value() == 4 || info == true){
+    if(radio.value() == 2 || radio.value() == 3 || radio.value() == 4){
 
       if(radio.value()==2){
         highlight_circlex = arr_sx[radio.value()]+rx1+400;
         highlight_circley = arr_sy[radio.value()]+ry1+50;
+
+        fill(255);
+        noStroke();
+        text("i",highlight_circlex-5, highlight_circley+16);
       }
       else if (radio.value()==3) {
         highlight_circlex = arr_sx[radio.value()]+rx1+800;
-        highlight_circley = arr_sy[radio.value()]+ry1+60;
+        highlight_circley = arr_sy[radio.value()]+ry1+50;
+
+        fill(255);
+        noStroke();
+        text("i",highlight_circlex-5, highlight_circley+16);
       }
       else if (radio.value()==4) {
         highlight_circlex = arr_sx[radio.value()]+rx1+1000;
         highlight_circley = arr_sy[radio.value()]+ry1+500;
+
+        fill(255);
+        noStroke();
+        text("i",highlight_circlex-5, highlight_circley+16);
       }
       var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
       if(dis < (r+5)/2){
-        image(contentcor_arr[s],260,300,content_size+50,content_size+55);
+        image(contentcor_arr[s],260,300,content_size+50,content_size+70);
       }
       else{
         fill(bg);
         noStroke();
-        rect(260,300,content_size+50,content_size+55)
+        rect(260,300,content_size+50,content_size+70)
       }
       stroke(255,0,0);
       noFill();
@@ -398,8 +368,18 @@ function draw() {
       noFill();
       noStroke();
     }
+    ellipse(highlight_circlex, highlight_circley,r+50,r+50);
+    textSize(50);
+    noStroke();
+    fill(bg);
+    rect(0,0,20,40)
+    // console.log(radio_selection)
+    if(radio_selection == true){
+      radio.selected("1");
+      radio_selection = false;
+      // console.log(radio.selected())
+    }
 
-    ellipse(highlight_circlex, highlight_circley,r-15,r-15);
   }
   else{
     // clear();
@@ -422,19 +402,30 @@ function draw() {
       push();
       fill(240);
       textSize(font_size)
+      noStroke();
       // console.log(s);
-      text(reaction_arr[space],-400, -yt+ space*gap)
+      text(reaction_arr[space],-480, -yt+ space*gap)
       pop();
     }
 
     // console.log(dot);
     fill(255);
-    ellipse(-420,-yt-8+ dot, 10,10) //highlights result reaction
+    ellipse(-510,-yt-8+ dot, 10,10) //highlights result reaction
     pop();
     push();
     translate(windowWidth/2,windowHeight/2)
-    image(img,oct_posx+50,oct_posy+20,content_size+50,content_size+55);
+    image(img,oct_posx+60,oct_posy+10,content_size+50,content_size+60);
     pop();
+
+    // noFill();
+    fill(bg);
+    stroke(230);
+    rect(400,450,300,220)
+    fill(230);
+    noStroke();
+    textSize(20);
+    textWrap(WORD);
+    text(message[s],405,360,260)
   }
 }
 
@@ -446,11 +437,19 @@ function windowResized() {
 function imageChange(){
   if(clear_setup == false){
     console.log("Image change");
+    radio_selection = true;
+    push();
+    translate(windowWidth/2,windowHeight/2)
+    bg_img = bg_imagesarr[int(random(0,bg_imagesarr.length))]
+    image(bg_img,0,0,windowWidth,windowHeight);
+    pop();
+
     s = s+1;
     img = contentmis_arr[s];
-    if(s == contentmis_arr.length){
-      results();
-      clear_setup = true;
+    if(s == contentmis_arr.length-1){
+      button.show();
+      nextbutton.hide();
+      // resultButton();
     }
   }
   else {
@@ -459,9 +458,10 @@ function imageChange(){
     // console.log(s)
     dot = dot + 36;
     img = contentcor_arr[s];
-    if(s == contentcor_arr.length){
-      s=0;
-      dot = 0;
+    if(s == contentcor_arr.length-1){
+      // s=0;
+      nextbutton.hide();
+      // dot = 0;
       img = contentcor_arr[s];
     }
   }
@@ -484,7 +484,7 @@ function timerCountdown() {
   color_start = '#222222';
   timer_button.style('background-color', color_start);
   if(timervalue>=0 && timer_start == true){
-    setInterval(function() {
+    var val = setInterval(function() {
       if (timervalue < seconds_time) {
         timervalue++;
         // console.log(timervalue);
@@ -498,45 +498,31 @@ function timerCountdown() {
       }else{
         timer_start = false;
         console.log("Timer end");
+        clearInterval(val);
         // clear_setup = true;
-        // results();
+        results();
         // clear_setup = true;
         // setup_run = true;
       }
     }, 1000);
   }
   else{
-    timer_start = false
-    results();
-    clear_setup = true;
+    console.log("else timer");
+    // timer_start = false
+    // results();
+    // clear_setup = true;
   }
 }
 
 //Information button event
-function infoButton(){
-
-  if (d < infoButton_size) {
-    if(info == false){
-      r = 80;
-      g = 80;
-      b = 80;
-      info = true;
-      console.log(info+" on");
-    }
-    else if(info == true){
-      r = 50;
-      g = 50;
-      b = 50;
-      info = false;
-      console.log(info+ "off");
-    }
-  }
-  col = color(r,g,b);
-  button.style('background-color', col);
+function resultButton(){
+  results();
+  clear_setup = true;
 }
 
 //network design behind post
 function structure_network(x, y, radius, npoints) {
+  // console.log("x- "+x+" y- "+y+" r- "+radius);
 
   let angle = TWO_PI / npoints;
   var num = 0
@@ -628,4 +614,87 @@ function structure_network(x, y, radius, npoints) {
     }
   }
   endShape(CLOSE);
+}
+
+function initialize(){
+  //responsive size
+  var size_w = screen.width;
+  var size_h = screen.height;
+  if(size_w > 1200){//desktop
+    if(size_h>1024){//big screens
+
+    }
+    else{ //tablets/ipad/desktop
+      oct_size = 150;
+      content_size = 250;
+      min_csize = 50;
+      max_csize = 100;
+    }
+  }
+  else if(size_w < 1200){
+    if(size_h>1024){//ipad
+
+    }
+    else{//phones
+      oct_size = 300;
+      content_size = 500;
+      min_csize = 80;
+      max_csize = 190;
+    }
+  }
+
+  if(size_w > 1200){//desktop
+    if(size_h>1024){//big screens
+
+    }
+    else{ //tablets/ipad/desktop
+      oct_posx = windowWidth-windowWidth;
+      oct_posy = windowHeight-windowHeight-60;
+      button_posy = windowHeight-120;
+      button_posx = windowWidth/2-220;
+      font_size = '24px';
+      infoButton_size = 50;
+      ib_radius = '2px';
+      ib_xpos =  250;
+      ib_ypos = windowHeight - windowHeight+80;
+      timer_buttonx = windowWidth - 350;
+      timer_buttony = windowHeight - windowHeight+80;
+      timefont_size = '22px';
+      timer_radius = '50px';
+      timer_buttonsize = infoButton_size+20;
+      arc_posx=timer_buttonx+35;
+      arc_posy= timer_buttony+35;
+      stroke_arc = 3;
+      arc_size = timer_buttonsize+20;
+      next_xpos = windowWidth - 345;
+      next_ypos = windowHeight - 440;
+    }
+  }
+  else if(size_w < 1200){
+    if(size_h>1024){//ipad
+
+    }
+    else{//phones
+      oct_posx = windowWidth-windowWidth;
+      oct_posy = windowHeight-windowHeight-100;
+      button_posy = windowHeight-300;
+      button_posx = windowWidth/2-400;
+      font_size = '45px';
+      infoButton_size = 60;
+      ib_radius = '40px';
+      ib_xpos = 150;
+      ib_ypos = windowHeight - windowHeight+150;
+      timer_buttonx = windowWidth - 300;
+      timer_buttony = windowHeight - windowHeight+120;
+      timefont_size = '42px';
+      timer_radius = '60px';
+      timer_buttonsize = infoButton_size+60;
+      arc_posx=timer_buttonx+60;
+      arc_posy= timer_buttony+60;
+      stroke_arc = 5;
+      arc_size = timer_buttonsize+40;
+      next_xpos = windowWidth - 200;
+      next_ypos = windowHeight - 1000;
+    }
+  }
 }
