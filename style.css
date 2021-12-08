@@ -1,22 +1,45 @@
 html, body {
   margin: 0;
   padding: 0;
+  /* <div>
+    input[type=radio] {
+      border: 0px;
+      width: 100%;
+      height: 2em;
+      align-items: center;
+    }
+  </div> */
 }
+
+input {
+  border-radius: 60%;
+  vertical-align: middle;
+width: 16px;
+height: 16px;
+
+border: 2px solid #999;
+/* transition: 0.2s all linear; */
+margin-right: 5px;
+
+position: relative;
+top: 50%;
+}
+
 canvas {
   display: block;
 }
-.radioButton{
+/* .radioButton{
 display: inline-block;
 justify-content: center;
 align-items: center;
-width: 300px;
-height: 50px;
+width: 50%;
+height: 50%;
 border: 1px solid white;
 border-radius: 15px;
 /* position: absolute; */
 /* box-shadow: 0px 0px 4px rgba(0, 0, 0, .50); */
 /* margin: 2rem; */
-}
+} */
 
 /* <style>
 
