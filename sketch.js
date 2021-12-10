@@ -1,9 +1,9 @@
 var rotate_r = 0;
 var cnv;
 var clear_setup = false;
-var content_misleading = [];
-var content_corrected = [];
-var background_images = [];
+var content_misleading = [];       //Content images
+var content_corrected = [];        //Corrected content images
+var background_images = [];        //Background images
 
 content_misleading = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/netflix_fake.jpg',
@@ -66,9 +66,9 @@ function preload(){
   for(var bi = 0; bi<background_images.length; bi++){
     bg_imagesarr[bi]=loadImage(background_images[bi]);
   }
-
 }
 
+//Circle network format
 function network(){
   translate(windowWidth/2,windowHeight/2)
   push();
@@ -85,15 +85,15 @@ function setup() {
   imageMode(CENTER);
   ellipseMode(CENTER);
 
-  initialize();
+  initialize(); //Defining all the variables
 
-  if(clear_setup == false){
+  if(clear_setup == false){   //Activity screens
 
     background(bg);
     network();  //formatting
     img = contentmis_arr[0];
 
-    //Reaction Buttons
+    //Reaction Radio Buttons
     radio = createRadio("Radio");
     radio.option(1, 'Ignore');
     radio.option(2, 'Like');
@@ -107,14 +107,14 @@ function setup() {
     radio.position(button_posx, button_posy);
     radio.selected('1');
 
-    //info button color
+    //next/previous button color
     r = 50;
     g = 50;
     b = 50;
     strokeWeight(2);
     angleMode(DEGREES)
 
-    //timer button
+    //timer button - Start
     timer_button = createButton('Start')
     timer_button.position(timer_buttonx,timer_buttony)
     timer_button.size(timer_buttonsize,timer_buttonsize);
@@ -139,6 +139,7 @@ function setup() {
     button.style('border-radius', ib_radius);
     button.size('200px','100px');
     button.hide();
+
     // if(radio.value() == 1){
     //   if(info == false){
     //     r = 50;
@@ -155,7 +156,7 @@ function setup() {
     //   info = false;
     // }
 
-    //next post
+    //next post button
     nextbutton = createButton('>');
     nextbutton.position(next_xpos+5,next_ypos);
     nextbutton.style('color','#ffffff')
@@ -167,7 +168,7 @@ function setup() {
     nextbutton.size(infoButton_size,infoButton_size);
     nextbutton.mousePressed(imageChange);
 
-    //next post
+    //previous post button
     prevbutton = createButton('<');
     prevbutton.position(next_xpos-60,next_ypos);
     prevbutton.style('color','#ffffff')
@@ -180,15 +181,17 @@ function setup() {
     // prevbutton.mousePressed(previmageChange);
 
   }
-  else{
+  else{   //Analysis page
     push();
     background(bg);
     translate(windowWidth/2,windowHeight/2)
-    s = 0;
-    dot = 0;
+    s = 0;                                        //Post image counter
+    dot = 0;                                      //Reaction marker
     img = contentcor_arr[0];
     r,g,b = 50;
     col = color(r,g,b);
+
+    //Next button
     nextbutton = createButton('>');
     nextbutton.position(next_xpos,next_ypos);
     nextbutton.style('color','#ffffff')
@@ -208,7 +211,7 @@ function setup() {
     // rotate(rotate_r);
     // a=0;
     angleMode(RADIANS);
-    console.log("Draw Network");
+    // console.log("Draw Network");
 
     //responsive size
     var size_w = screen.width;
@@ -241,6 +244,7 @@ function setup() {
         yt = 130;
       }
     }
+
     // network();
     structure_network(oct_posx+50,oct_posy, oct_size,8)
     pop();
@@ -252,75 +256,36 @@ function draw() {
 
   if(clear_setup == false){
 
+    //image formatting
     push();
     translate(windowWidth/2,windowHeight/2)
     image(img,oct_posx,oct_posy,content_size+30,content_size+20);
     pop();
 
-      button.mousePressed(resultButton);
+    button.mousePressed(resultButton);
 
-    d = dist(mouseX, mouseY, ib_xpos, ib_ypos);
-    //Record the reaction and animation
-    // if(radio.value() == 1){
-    //   if(info == true){
-    //     reaction = "More information";
-    //   }
-    //   else{
-    //     reaction = "Ignore";
-    //   }
-    // }
-    // else{
-      if(radio.value()==2){
-        reaction = "Like";
-      }
-      else if(radio.value()==3){
-        reaction = "Comment";
-      }
-      else if(radio.value()==4){
-        reaction = "Share";
-      }
-      else if(radio.value()==5){
-        reaction = "Report";
-      }
-      else if(radio.value()==1){
-        reaction = "Ignore";
-      }
-    // }
-
-    // if(radio.value() == 1){
-    //   if(info == false){
-    //     r = 50;
-    //     g = 50;
-    //     b = 50;
-    //     col = color(r,g,b);
-    //     button.style('background-color', col);
-    //   }
-    //   // button.touchStarted(infoButton);  //not working properly
-    //   button.mousePressed(infoButton);
-    // }
-    // else{
-    //   r = 120;
-    //   b = 120;
-    //   g = 120;
-    //   info = false;
-    //   col = color(r,g,b);
-    //   button.style('background-color', col);
-    // }
-    // console.log(reaction);
+    d = dist(mouseX, mouseY, ib_xpos, ib_ypos);       //for hover effect
 
 
+      // if(radio.value()==2){
+      //   reaction = "Like";
+      // }
+      // else if(radio.value()==3){
+      //   reaction = "Comment";
+      // }
+      // else if(radio.value()==4){
+      //   reaction = "Share";
+      // }
+      // else if(radio.value()==5){
+      //   reaction = "Report";
+      // }
+      // else if(radio.value()==1){
+      //   reaction = "Ignore";
+      // }
+
+      //Record the reaction
     if(s<=content_misleading.length){
       // console.log(reaction_arr);
-      // console.log(s);
-      // if(radio.value() == 1){
-      //   if(info == true){
-      //     reaction_arr[s] = "More Information";
-      //   }
-      //   else{
-      //     reaction_arr[s]="Ignore";
-      //   }
-      // }
-      // else{
         if(radio.value() == 2){
           reaction_arr[s]="Like";
         }
@@ -339,7 +304,7 @@ function draw() {
       // }
     }
 
-    if(s==0){
+    if(s==0){             //First post
       prevbutton.hide();
     }
     else{
@@ -347,14 +312,17 @@ function draw() {
       prevbutton.mousePressed(previmageChange);
     }
 
+    //More information button formatting
     if(radio.value() >= 1){
+        highlight_circlex = windowWidth - 1286;
+        highlight_circley = windowHeight - 591;
 
-      // if(radio.value()>=1){
-        highlight_circlex = 250;
-        highlight_circley = 130;
+        noFill();
+        stroke(bg)
+        ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
 
       // }
-      if (radio.value()>=2 && radio.value()<=4) {
+      if (radio.value()>=2 && radio.value()<=4) {        //highlight
         noFill();
         stroke(255)
         ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
@@ -366,13 +334,13 @@ function draw() {
       }
 
       var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
-      if(dis < (r+5)/2){
-        image(contentcor_arr[s],250,380,content_size+80,content_size+120);
+      if(dis < (r+5)/2){      //Hover effect
+        image(contentcor_arr[s],windowWidth - 1286,windowHeight-341,content_size+80,content_size+120);
       }
       else{
         fill(bg);
         noStroke();
-        rect(250,380,content_size+80,content_size+120)
+        rect(windowWidth - 1286,windowHeight-341,content_size+80,content_size+120)
       }
       noFill();
     }
@@ -380,68 +348,93 @@ function draw() {
       noFill();
       noStroke();
     }
+
     fill(255,0,0);
     stroke(bg);
-    ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize,timer_buttonsize);
+    ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize,timer_buttonsize);    //More information button
 
     fill(255);
     noStroke();
-    text("i",highlight_circlex-5, highlight_circley+7);
     textSize(50);
+    text("i",highlight_circlex-5, highlight_circley+7);
     noStroke();
     fill(bg);
     rect(0,0,20,40)
-    // console.log(radio_selection)
+
+    fill(200);
+    noStroke();
+    textSize(12)
+    text("Hover for more information!",highlight_circlex-80, highlight_circley-25,100);
+
+    fill(200);
+    noStroke();
+    textSize(12)
+    text("Click to start the timer!",highlight_circlex+1075, highlight_circley-25,80);
+
+    if(timervalue > 0){
+      fill(bg);
+      noStroke();
+      rect(highlight_circlex+1075, highlight_circley-25,80,80);
+      fill(200);
+      text("Timer Started!",highlight_circlex+1075, highlight_circley-20,80);
+    }
+
+    if(s == contentmis_arr.length-1){
+      fill(bg);
+      noStroke();
+      rect(highlight_circlex+1075, highlight_circley-25,80,80);
+    }
+
+    //Clearing radio selections after every image change
     if(radio_selection == true){
-      radio.selected("1");
-
       var ele = document.getElementsByName("Radio");
-      console.log(ele);
+      // console.log(ele);
    for(var i=0;i<ele.length;i++){
-      ele[i].checked = false;}
-
+      ele[i].checked = false;
+    }
       radio_selection = false;
-      // console.log(radio.selected())
     }
 
   }
-  else{
+  else{                                        //Analysis page
     // clear();
     push();
     translate(windowWidth/2,windowHeight/2)
     clear_setup = true;
+
+    //Reset setup and run
     if(setup_run == true){
       setup();
       console.log("Run setup");
       setup_run = false;
     }
 
+    //Hide all the buttons
     button.hide();
     timer_button.hide();
-    // nextbutton.hide();
     radio.hide();
     // console.log(reaction_arr);
 
+    //Show all the user reactions
     for(var space = 0; space<content_misleading.length; space++){
       push();
       fill(240);
       textSize(font_size)
       noStroke();
-      // console.log(s);
       text(reaction_arr[space],-480, -yt+ space*gap)
       pop();
     }
 
     // console.log(dot);
     fill(255);
-    ellipse(-510,-yt-8+ dot, 10,10) //highlights result reaction
+    ellipse(-510,-yt-8+ dot, 10,10)         //highlights result reaction
     pop();
     push();
     translate(windowWidth/2,windowHeight/2)
     image(img,oct_posx+60,oct_posy+10,content_size+50,content_size+70);
     pop();
 
-    // noFill();
+    // Message box
     fill(bg);
     stroke(230);
     rect(400,450,300,220)
@@ -457,9 +450,9 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+//Previous image function
 function previmageChange(){
   s = s-2;
-  // dot = dot - 36;
   imageChange()
   if(clear_setup==true){
     dot = dot-72;
@@ -469,17 +462,18 @@ function previmageChange(){
 //Image change
 function imageChange(){
   if(clear_setup == false){
-    console.log("Image change");
-    radio_selection = true;
+    // console.log("Image change");
+    radio_selection = true;                //clear radio selections
     push();
     translate(windowWidth/2,windowHeight/2)
-    bg_img = bg_imagesarr[int(random(0,bg_imagesarr.length))]
+    bg_img = bg_imagesarr[int(random(0,bg_imagesarr.length))]  //Background image
     image(bg_img,0,0,windowWidth,windowHeight);
     pop();
 
     s = s+1;
     img = contentmis_arr[s];
-    if(s == contentmis_arr.length-1){
+    if(s == contentmis_arr.length-1){        //Hiding next button in last post
+
       button.show();
       nextbutton.hide();
       timer_button.hide();
@@ -492,19 +486,17 @@ function imageChange(){
     }
   }
   else {
-    // console.log("Image change Corrected");
     s = s+1;
-    // console.log(s)
     dot = dot + 36;
     img = contentcor_arr[s];
+
+    //End text
     if(s == contentcor_arr.length-1){
-      // s=0;
       nextbutton.hide();
       noFill();
       stroke(190)
       rect(windowWidth-300,windowHeight-415,80,30)
       text("END",windowWidth-320,windowHeight-408)
-      // dot = 0;
       img = contentcor_arr[s];
     }
     else{
@@ -512,25 +504,20 @@ function imageChange(){
       noStroke();
       rect(windowWidth-300,windowHeight-415,90,40)
       nextbutton.show();
-      // dot = dot - 36;
     }
   }
 }
 
 //result page
 function results(){
-  // noLoop();
   console.log("results");
-  // redraw();
-  // cnv.reset();
-  // clear();
   clear_setup = true;
   setup_run = true;
-  // console.log("Results");
 }
 
 //timer
 function timerCountdown() {
+
   color_start = '#222222';
   timer_button.style('background-color', color_start);
   if(timervalue>=0 && timer_start == true){
@@ -545,26 +532,18 @@ function timerCountdown() {
         noFill();
         arc(arc_posx,arc_posy,arc_size,arc_size,0,seconds);
         pop();
-      }else{
+      }
+      else{
         timer_start = false;
         console.log("Timer end");
         clearInterval(val);
-        // clear_setup = true;
         results();
-        // clear_setup = true;
-        // setup_run = true;
       }
     }, 1000);
   }
-  else{
-    console.log("else timer");
-    // timer_start = false
-    // results();
-    // clear_setup = true;
-  }
 }
 
-//Information button event
+//Result overview button event
 function resultButton(){
   results();
   clear_setup = true;
@@ -572,7 +551,6 @@ function resultButton(){
 
 //network design behind post
 function structure_network(x, y, radius, npoints) {
-  // console.log("x- "+x+" y- "+y+" r- "+radius);
 
   let angle = TWO_PI / npoints;
   var num = 0
@@ -588,9 +566,11 @@ function structure_network(x, y, radius, npoints) {
     vertex(sx, sy);
     stroke(120);
     fill(255);
+
+    //Circles and lines from each vertex
     if(sx<0 && sy<0){
-      rx1 = random(10,-150);
-      ry1 = random(0,-100);
+      rx1 = random(10,-100);
+      ry1 = random(0,-80);
       r = random(min_csize-5,max_csize)
       line(sx,sy,sx+rx1,sy+ry1);
       push();
@@ -666,6 +646,7 @@ function structure_network(x, y, radius, npoints) {
   endShape(CLOSE);
 }
 
+//Defining each variable
 function initialize(){
   //responsive size
   var size_w = screen.width;
