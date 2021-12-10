@@ -94,7 +94,7 @@ function setup() {
     img = contentmis_arr[0];
 
     //Reaction Buttons
-    radio = createRadio();
+    radio = createRadio("Radio");
     radio.option(1, 'Ignore');
     radio.option(2, 'Like');
     radio.option(3, 'Comment');
@@ -204,7 +204,7 @@ function setup() {
     push();
     noFill();
     translate(windowWidth/2,windowHeight/2)
-    stroke('white');
+    stroke(180);
     // rotate(rotate_r);
     // a=0;
     angleMode(RADIANS);
@@ -310,7 +310,7 @@ function draw() {
 
 
     if(s<=content_misleading.length){
-      console.log(reaction_arr);
+      // console.log(reaction_arr);
       // console.log(s);
       // if(radio.value() == 1){
       //   if(info == true){
@@ -354,30 +354,25 @@ function draw() {
         highlight_circley = 130;
 
       // }
-      // else if (radio.value()==3) {
-      //   highlight_circlex = arr_sx[radio.value()]+rx1+800;
-      //   highlight_circley = arr_sy[radio.value()]+ry1+50;
-      //
-      //   fill(255);
-      //   noStroke();
-      //   text("i",highlight_circlex-5, highlight_circley+16);
-      // }
-      // else if (radio.value()==4) {
-      //   highlight_circlex = arr_sx[radio.value()]+rx1+1000;
-      //   highlight_circley = arr_sy[radio.value()]+ry1+500;
-      //
-      //   fill(255);
-      //   noStroke();
-      //   text("i",highlight_circlex-5, highlight_circley+16);
-      // }
+      if (radio.value()>=2 && radio.value()<=4) {
+        noFill();
+        stroke(255)
+        ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
+      }
+      else{
+        noFill();
+        stroke(bg)
+        ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
+      }
+
       var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
       if(dis < (r+5)/2){
-        image(contentcor_arr[s],250,350,content_size+80,content_size+120);
+        image(contentcor_arr[s],250,380,content_size+80,content_size+120);
       }
       else{
         fill(bg);
         noStroke();
-        rect(250,350,content_size+80,content_size+120)
+        rect(250,380,content_size+80,content_size+120)
       }
       noFill();
     }
@@ -399,6 +394,12 @@ function draw() {
     // console.log(radio_selection)
     if(radio_selection == true){
       radio.selected("1");
+
+      var ele = document.getElementsByName("Radio");
+      console.log(ele);
+   for(var i=0;i<ele.length;i++){
+      ele[i].checked = false;}
+
       radio_selection = false;
       // console.log(radio.selected())
     }
@@ -461,7 +462,7 @@ function previmageChange(){
   // dot = dot - 36;
   imageChange()
   if(clear_setup==true){
-    dot = dot-36;
+    dot = dot-72;
   }
 }
 
@@ -499,8 +500,19 @@ function imageChange(){
     if(s == contentcor_arr.length-1){
       // s=0;
       nextbutton.hide();
+      noFill();
+      stroke(190)
+      rect(windowWidth-300,windowHeight-415,80,30)
+      text("END",windowWidth-320,windowHeight-408)
       // dot = 0;
       img = contentcor_arr[s];
+    }
+    else{
+      fill(bg);
+      noStroke();
+      rect(windowWidth-300,windowHeight-415,90,40)
+      nextbutton.show();
+      // dot = dot - 36;
     }
   }
 }
@@ -584,8 +596,8 @@ function structure_network(x, y, radius, npoints) {
       push();
       if(clear_setup == true){
         var highlight = int(random(0,5));
-        if(highlight <= 3){
-          stroke(random(210,255));
+        if(highlight <= 2){
+          stroke(random(180,200));
           noFill();
           ellipse(sx+rx1-5, sy+ry1-10,r+15,r+15);
         }
@@ -605,7 +617,7 @@ function structure_network(x, y, radius, npoints) {
       if(clear_setup == true){
         var highlight = int(random(0,5));
         if(highlight >= 3){
-          stroke(random(210,255));
+          stroke(random(180,200));
           noFill();
           ellipse(sx+rx1-5, sy+ry1-10,r+9,r+9);
         }
@@ -623,8 +635,8 @@ function structure_network(x, y, radius, npoints) {
       push();
       if(clear_setup == true){
         var highlight = int(random(0,5));
-        if(highlight >= 3){
-          stroke(random(210,255));
+        if(highlight >= 4){
+          stroke(random(180,200));
           noFill();
           ellipse(sx+rx1-5, sy+ry1-10,r+10,r+10);
         }
@@ -642,7 +654,7 @@ function structure_network(x, y, radius, npoints) {
       if(clear_setup == true){
         var highlight = int(random(0,5));
         if(highlight <= 3){
-          stroke(255);
+          stroke(180,200);
           noFill();
           ellipse(sx+rx1-5, sy+ry1-10,r+17,r+17);
         }
