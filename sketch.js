@@ -54,8 +54,10 @@ var arr_sy=[];
 var highlight_circlex = 0;
 var highlight_circley = 0;
 var radio_selection = false;
-var message = ["Misinformation can be in anyform. It can be content with misleading headlines or one sided infomration...","Information is turned and twisted to get more attention. Every like, comment or share spreads it to other people...", "Not just restricted to text, images can also be used to maniplulate your decisions, which is why 'thinking' before reacting is important...","Out of the 5 obvious options that were presented to you, before interacting with any of those you should always look at other sources and then decide whether to like, comment, share or report...","Ignoring doesn't spread the information but the best option to reduce the spread is to report whenever you come across one."]
+var message = ["Misinformation can be in anyform. It can be content with misleading headlines or one sided information...","Information is turned and twisted to get more attention. Every like, comment or share spreads it to other people...", "Not just restricted to text, images can also be used to maniplulate your decisions, which is why 'thinking' before reacting is important...","Out of the 5 obvious options that were presented to you, before interacting with any of those you should always look at other sources and then decide whether to like, comment, share or report...","Ignoring doesn't spread the information but the best option to reduce the spread is to report whenever you come across one."]
 
+
+//Preload all the images
 function preload(){
   for(var c = 0; c<content_misleading.length; c++){
     contentmis_arr[c]=loadImage(content_misleading[c]);
@@ -66,15 +68,6 @@ function preload(){
   for(var bi = 0; bi<background_images.length; bi++){
     bg_imagesarr[bi]=loadImage(background_images[bi]);
   }
-}
-
-//Circle network format
-function network(){
-  translate(windowWidth/2,windowHeight/2)
-  push();
-  rotate(rotate_r);
-  structure_network(oct_posx,oct_posy, oct_size,8)
-  pop();
 }
 
 
@@ -140,21 +133,6 @@ function setup() {
     button.size('200px','100px');
     button.hide();
 
-    // if(radio.value() == 1){
-    //   if(info == false){
-    //     r = 50;
-    //     g = 50;
-    //     b = 50;
-    //   }
-    //   // button.touchStarted(infoButton);  //not working properly
-    //   button.mousePressed(infoButton);
-    // }
-    // else{
-    //   r = 120;
-    //   b = 120;
-    //   g = 120;
-    //   info = false;
-    // }
 
     //next post button
     nextbutton = createButton('>');
@@ -208,8 +186,6 @@ function setup() {
     noFill();
     translate(windowWidth/2,windowHeight/2)
     stroke(180);
-    // rotate(rotate_r);
-    // a=0;
     angleMode(RADIANS);
     // console.log("Draw Network");
 
@@ -262,45 +238,29 @@ function draw() {
     image(img,oct_posx,oct_posy,content_size+30,content_size+20);
     pop();
 
-    button.mousePressed(resultButton);
+    button.mousePressed(resultButton);      //Result overview
 
     d = dist(mouseX, mouseY, ib_xpos, ib_ypos);       //for hover effect
 
 
-      // if(radio.value()==2){
-      //   reaction = "Like";
-      // }
-      // else if(radio.value()==3){
-      //   reaction = "Comment";
-      // }
-      // else if(radio.value()==4){
-      //   reaction = "Share";
-      // }
-      // else if(radio.value()==5){
-      //   reaction = "Report";
-      // }
-      // else if(radio.value()==1){
-      //   reaction = "Ignore";
-      // }
-
-      //Record the reaction
+    //Record the reaction
     if(s<=content_misleading.length){
       // console.log(reaction_arr);
-        if(radio.value() == 2){
-          reaction_arr[s]="Like";
-        }
-        else if(radio.value() == 3){
-          reaction_arr[s]="Comment";
-        }
-        else if(radio.value() == 4){
-          reaction_arr[s]="Share";
-        }
-        else if(radio.value() == 5){
-          reaction_arr[s]="Report";
-        }
-        else if(radio.value() == 1){
-          reaction_arr[s]="Ignore";
-        }
+      if(radio.value() == 2){
+        reaction_arr[s]="Like";
+      }
+      else if(radio.value() == 3){
+        reaction_arr[s]="Comment";
+      }
+      else if(radio.value() == 4){
+        reaction_arr[s]="Share";
+      }
+      else if(radio.value() == 5){
+        reaction_arr[s]="Report";
+      }
+      else if(radio.value() == 1){
+        reaction_arr[s]="Ignore";
+      }
       // }
     }
 
@@ -314,14 +274,13 @@ function draw() {
 
     //More information button formatting
     if(radio.value() >= 1){
-        highlight_circlex = windowWidth - 1286;
-        highlight_circley = windowHeight - 591;
+      highlight_circlex = next_xpos+30;
+      highlight_circley = windowHeight - windowHeight+280;
 
-        noFill();
-        stroke(bg)
-        ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
+      noFill();
+      stroke(bg)
+      ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
 
-      // }
       if (radio.value()>=2 && radio.value()<=4) {        //highlight
         noFill();
         stroke(255)
@@ -335,12 +294,12 @@ function draw() {
 
       var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
       if(dis < (r+5)/2){      //Hover effect
-        image(contentcor_arr[s],windowWidth - 1286,windowHeight-341,content_size+80,content_size+120);
+        image(contentcor_arr[s],windowWidth - 1286,windowHeight-391,content_size+80,content_size+120);      //hover image
       }
       else{
         fill(bg);
         noStroke();
-        rect(windowWidth - 1286,windowHeight-341,content_size+80,content_size+120)
+        rect(windowWidth - 1286,windowHeight-391,content_size+80,content_size+120)
       }
       noFill();
     }
@@ -364,12 +323,12 @@ function draw() {
     fill(200);
     noStroke();
     textSize(12)
-    text("Hover for more information!",highlight_circlex-80, highlight_circley-25,100);
+    text("Hover for more information!",highlight_circlex+100, highlight_circley-25,100);
 
     fill(200);
     noStroke();
     textSize(12)
-    text("Click to start the timer!",highlight_circlex+1075, highlight_circley-25,80);
+    text("Click to start the timer!",highlight_circlex+ 90, highlight_circley-178,80);
 
     if(timervalue > 0){
       fill(bg);
@@ -389,9 +348,9 @@ function draw() {
     if(radio_selection == true){
       var ele = document.getElementsByName("Radio");
       // console.log(ele);
-   for(var i=0;i<ele.length;i++){
-      ele[i].checked = false;
-    }
+      for(var i=0;i<ele.length;i++){
+        ele[i].checked = false;
+      }
       radio_selection = false;
     }
 
@@ -450,14 +409,6 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-//Previous image function
-function previmageChange(){
-  s = s-2;
-  imageChange()
-  if(clear_setup==true){
-    dot = dot-72;
-  }
-}
 
 //Image change
 function imageChange(){
@@ -508,16 +459,19 @@ function imageChange(){
   }
 }
 
-//result page
-function results(){
-  console.log("results");
-  clear_setup = true;
-  setup_run = true;
+
+//Previous image function
+function previmageChange(){
+  s = s-2;
+  imageChange()
+  if(clear_setup==true){
+    dot = dot-72;
+  }
 }
+
 
 //timer
 function timerCountdown() {
-
   color_start = '#222222';
   timer_button.style('background-color', color_start);
   if(timervalue>=0 && timer_start == true){
@@ -543,15 +497,9 @@ function timerCountdown() {
   }
 }
 
-//Result overview button event
-function resultButton(){
-  results();
-  clear_setup = true;
-}
 
 //network design behind post
 function structure_network(x, y, radius, npoints) {
-
   let angle = TWO_PI / npoints;
   var num = 0
   beginShape();
@@ -569,9 +517,9 @@ function structure_network(x, y, radius, npoints) {
 
     //Circles and lines from each vertex
     if(sx<0 && sy<0){
-      rx1 = random(10,-100);
-      ry1 = random(0,-80);
-      r = random(min_csize-5,max_csize)
+      rx1 = random(10,-90);
+      ry1 = random(0,-70);
+      r = random(min_csize-5,max_csize-2)
       line(sx,sy,sx+rx1,sy+ry1);
       push();
       if(clear_setup == true){
@@ -646,6 +594,7 @@ function structure_network(x, y, radius, npoints) {
   endShape(CLOSE);
 }
 
+
 //Defining each variable
 function initialize(){
   //responsive size
@@ -679,10 +628,10 @@ function initialize(){
 
     }
     else{ //tablets/ipad/desktop
-      oct_posx = windowWidth-windowWidth;
+      oct_posx = windowWidth-windowWidth-80;
       oct_posy = windowHeight-windowHeight-60;
       button_posy = windowHeight-120;
-      button_posx = windowWidth/2-220;
+      button_posx = windowWidth/2-300;
       font_size = '24px';
       infoButton_size = 50;
       ib_radius = '2px';
@@ -698,7 +647,7 @@ function initialize(){
       stroke_arc = 3;
       arc_size = timer_buttonsize+20;
       next_xpos = windowWidth - 345;
-      next_ypos = windowHeight - 440;
+      next_ypos = windowHeight - 320;
     }
   }
   else if(size_w < 1200){
@@ -728,4 +677,27 @@ function initialize(){
       next_ypos = windowHeight - 1000;
     }
   }
+}
+
+
+//Circle network format
+function network(){
+  translate(windowWidth/2,windowHeight/2)
+  push();
+  rotate(rotate_r);
+  structure_network(oct_posx,oct_posy, oct_size,8)
+  pop();
+}
+
+//Result overview button event
+function resultButton(){
+  results();
+  clear_setup = true;
+}
+
+//result page
+function results(){
+  console.log("results");
+  clear_setup = true;
+  setup_run = true;
 }
