@@ -4,7 +4,7 @@ var clear_setup = false;
 var content_misleading = [];       //Content images
 var content_corrected = [];        //Corrected content images
 var background_images = [];        //Background images
-
+var background_images_phone = [];
 content_misleading = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/Headline_1.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/netflix_fake.jpg',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/plastic_fake.jpg',
@@ -22,10 +22,17 @@ background_images = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedi
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_new3.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_new4.JPG',];
 
+background_images_phone = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone0.jpg',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone2.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone3.JPG']
+
 var contentmis_arr=[];
 var contentcor_arr=[];
 var bg_imagesarr=[];
+var bg_phoneimagesarr = [];
 var bg = 20;
+var size_h;
+var size_w;
 var val;
 var line_x1, line_y1, line_lengthx, line_lengthy = 0;
 var r, g, b;
@@ -63,8 +70,13 @@ function preload(){
   for(var m = 0; m<content_corrected.length; m++){
     contentcor_arr[m]=loadImage(content_corrected[m]);
   }
+
   for(var bi = 0; bi<background_images.length; bi++){
     bg_imagesarr[bi]=loadImage(background_images[bi]);
+  }
+
+  for(var bi1 = 0; bi1<background_images_phone.length; bi1++){
+    bg_phoneimagesarr[bi1]=loadImage(background_images_phone[bi1]);
   }
 }
 
@@ -272,8 +284,6 @@ function draw() {
 
     //More information button formatting
     if(radio.value() >= 1){
-      highlight_circlex = next_xpos+30;
-      highlight_circley = windowHeight - windowHeight+280;
 
       noFill();
       stroke(bg)
@@ -297,7 +307,6 @@ function draw() {
       else{
         fill(bg);
         noStroke();
-        // stroke(255)
         rect(windowWidth - 1286,0,content_size+80,windowHeight*2)
       }
       noFill();
@@ -319,15 +328,35 @@ function draw() {
     fill(bg);
     rect(0,0,20,40)
 
+    if(size_w > 1200){//desktop
+      if(size_h>1024){//big screens
+
+      }
+      else{ //tablets/ipad/desktop
+
     fill(200);
     noStroke();
-    textSize(12)
+    textSize(text_size)
     text("Hover for more information!",highlight_circlex+105, highlight_circley-25,100);
 
     fill(200);
     noStroke();
-    textSize(12)
+    textSize(text_size)
     text("Click to start the timer!",highlight_circlex+ 95, highlight_circley-178,80);
+  }
+}
+
+    else if(size_w < 1200){
+      if(size_h>1024){//ipad
+
+      }
+      else{//phones
+        fill(200);
+        noStroke();
+        textSize(text_size)
+        text("Click for more information!",highlight_circlex+130, highlight_circley-50,100);
+      }
+    }
 
     if(timervalue > 0){
       fill(bg);
@@ -352,6 +381,15 @@ function draw() {
       }
       radio_selection = false;
     }
+
+
+    //Remove
+    // button.hide();
+    // timer_button.hide();
+    // radio.hide();
+    // nextbutton.hide();
+    // fill(bg)
+    // rect(700,250,200,200)
 
   }
   else{                                        //Analysis page
@@ -416,14 +454,30 @@ function imageChange(){
     radio_selection = true;                //clear radio selections
     push();
     translate(windowWidth/2,windowHeight/2)
-    bg_img = bg_imagesarr[int(random(0,bg_imagesarr.length))]  //Background image
+
+    if(size_w > 1200){//desktop
+      if(size_h>1024){//big screens
+
+      }
+      else{ //tablets/ipad/desktop
+        bg_img = bg_imagesarr[int(random(0,bg_imagesarr.length))]  //Background image
+      }
+    }
+    else if(size_w < 1200){
+      if(size_h>1024){//ipad
+
+      }
+      else{//phones
+        bg_img = bg_phoneimagesarr[int(random(0,bg_phoneimagesarr.length))]
+      }
+    }
+
     image(bg_img,0,0,windowWidth,windowHeight);
     pop();
 
     s = s+1;
     img = contentmis_arr[s];
     if(s == contentmis_arr.length-1){        //Hiding next button in last post
-
       button.show();
       nextbutton.hide();
       timer_button.hide();
@@ -597,8 +651,8 @@ function structure_network(x, y, radius, npoints) {
 //Defining each variable
 function initialize(){
   //responsive size
-  var size_w = screen.width;
-  var size_h = screen.height;
+  size_w = screen.width;
+  size_h = screen.height;
   if(size_w > 1200){//desktop
     if(size_h>1024){//big screens
 
@@ -647,6 +701,9 @@ function initialize(){
       arc_size = timer_buttonsize+20;
       next_xpos = windowWidth - 345;
       next_ypos = windowHeight - 310;
+      highlight_circlex = next_xpos+30;
+      highlight_circley = windowHeight - windowHeight+280;
+      text_size = 12;
     }
   }
   else if(size_w < 1200){
@@ -663,9 +720,9 @@ function initialize(){
       ib_radius = '40px';
       ib_xpos = 150;
       ib_ypos = windowHeight - windowHeight+150;
-      timer_buttonx = windowWidth - 300;
-      timer_buttony = windowHeight - windowHeight+120;
-      timefont_size = '42px';
+      timer_buttonx = windowWidth/5;
+      timer_buttony = windowHeight/10;
+      timefont_size = '40px';
       timer_radius = '60px';
       timer_buttonsize = infoButton_size+60;
       arc_posx=timer_buttonx+60;
@@ -674,6 +731,9 @@ function initialize(){
       arc_size = timer_buttonsize+40;
       next_xpos = windowWidth - 200;
       next_ypos = windowHeight - 1000;
+      highlight_circlex = windowWidth/1.4;
+      highlight_circley = windowHeight/7;
+      text_size = 24;
     }
   }
 }
