@@ -17,18 +17,16 @@ content_corrected = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedi
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/facebook_fixed.JPG',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/tourism_fixed.JPG'];
 
-background_images = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background1.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background2.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background3.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background4.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background5.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/background6.JPG'];
+background_images = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_new.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_new2.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_new3.JPG',
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_new4.JPG',];
 
 var contentmis_arr=[];
 var contentcor_arr=[];
 var bg_imagesarr=[];
 var bg = 20;
+var val;
 var line_x1, line_y1, line_lengthx, line_lengthy = 0;
 var r, g, b;
 var s = 0;
@@ -54,7 +52,7 @@ var arr_sy=[];
 var highlight_circlex = 0;
 var highlight_circley = 0;
 var radio_selection = false;
-var message = ["Misinformation can be in anyform. It can be content with misleading headlines or one sided information...","Information is turned and twisted to get more attention. Every like, comment or share spreads it to other people...", "Not just restricted to text, images can also be used to maniplulate your decisions, which is why 'thinking' before reacting is important...","Out of the 5 obvious options that were presented to you, before interacting with any of those you should always look at other sources and then decide whether to like, comment, share or report...","Ignoring doesn't spread the information but the best option to reduce the spread is to report whenever you come across one."]
+var message = ["Misinformation can be in anyform. It can be content with misleading headlines or one sided information...","Information is turned and twisted to get more attention. Every like, comment or share spreads it to other people...", "Not just restricted to text, images can also be used to maniplulate your decisions, which is why 'thinking' before reacting is important...","Out of the 5 options that were presented to you, before interacting with any of those you should always look at other sources and then decide whether to like, comment, share or report...","Ignoring doesn't spread the information but the best option to reduce the spread is to report whenever you come across one."]
 
 
 //Preload all the images
@@ -299,7 +297,8 @@ function draw() {
       else{
         fill(bg);
         noStroke();
-        rect(windowWidth - 1286,windowHeight-391,content_size+80,content_size+120)
+        // stroke(255)
+        rect(windowWidth - 1286,0,content_size+80,windowHeight*2)
       }
       noFill();
     }
@@ -323,25 +322,25 @@ function draw() {
     fill(200);
     noStroke();
     textSize(12)
-    text("Hover for more information!",highlight_circlex+100, highlight_circley-25,100);
+    text("Hover for more information!",highlight_circlex+105, highlight_circley-25,100);
 
     fill(200);
     noStroke();
     textSize(12)
-    text("Click to start the timer!",highlight_circlex+ 90, highlight_circley-178,80);
+    text("Click to start the timer!",highlight_circlex+ 95, highlight_circley-178,80);
 
     if(timervalue > 0){
       fill(bg);
       noStroke();
-      rect(highlight_circlex+1075, highlight_circley-25,80,80);
+      rect(highlight_circlex+90, highlight_circley-175,80,80);
       fill(200);
-      text("Timer Started!",highlight_circlex+1075, highlight_circley-20,80);
+      text("Timer Started!",highlight_circlex+100, highlight_circley-172,80);
     }
 
     if(s == contentmis_arr.length-1){
       fill(bg);
       noStroke();
-      rect(highlight_circlex+1075, highlight_circley-25,80,80);
+      rect(highlight_circlex+105, highlight_circley-175,80,80);
     }
 
     //Clearing radio selections after every image change
@@ -446,14 +445,14 @@ function imageChange(){
       nextbutton.hide();
       noFill();
       stroke(190)
-      rect(windowWidth-300,windowHeight-415,80,30)
-      text("END",windowWidth-320,windowHeight-408)
+      rect(windowWidth-300,windowHeight-285,80,30)
+      text("END",windowWidth-320,windowHeight-278)
       img = contentcor_arr[s];
     }
     else{
       fill(bg);
       noStroke();
-      rect(windowWidth-300,windowHeight-415,90,40)
+      rect(windowWidth-300,windowHeight-285,90,40)
       nextbutton.show();
     }
   }
@@ -475,7 +474,7 @@ function timerCountdown() {
   color_start = '#222222';
   timer_button.style('background-color', color_start);
   if(timervalue>=0 && timer_start == true){
-    var val = setInterval(function() {
+    val = setInterval(function() {
       if (timervalue < seconds_time) {
         timervalue++;
         // console.log(timervalue);
@@ -629,7 +628,7 @@ function initialize(){
     }
     else{ //tablets/ipad/desktop
       oct_posx = windowWidth-windowWidth-80;
-      oct_posy = windowHeight-windowHeight-60;
+      oct_posy = windowHeight-windowHeight-70;
       button_posy = windowHeight-120;
       button_posx = windowWidth/2-300;
       font_size = '24px';
@@ -647,7 +646,7 @@ function initialize(){
       stroke_arc = 3;
       arc_size = timer_buttonsize+20;
       next_xpos = windowWidth - 345;
-      next_ypos = windowHeight - 320;
+      next_ypos = windowHeight - 310;
     }
   }
   else if(size_w < 1200){
@@ -691,6 +690,7 @@ function network(){
 
 //Result overview button event
 function resultButton(){
+  clearInterval(val);
   results();
   clear_setup = true;
 }
