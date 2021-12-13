@@ -24,7 +24,7 @@ background_images = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedi
 
 background_images_phone = ['https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone0.jpg',
 'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone2.JPG',
-'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone3.JPG']
+'https://raw.githubusercontent.com/HimaniKumawat/SocialMedia_Networking/main/Content/bg_phone3.JPG'];
 
 var contentmis_arr=[];
 var contentcor_arr=[];
@@ -299,16 +299,6 @@ function draw() {
         stroke(bg)
         ellipse(highlight_circlex, highlight_circley-12,timer_buttonsize+10,timer_buttonsize+10);
       }
-
-      var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
-      if(dis < (r+5)/2){      //Hover effect
-        image(contentcor_arr[s],windowWidth - 1286,windowHeight-391,content_size+80,content_size+120);      //hover image
-      }
-      else{
-        fill(bg);
-        noStroke();
-        rect(windowWidth - 1286,0,content_size+80,windowHeight*2)
-      }
       noFill();
     }
     else{
@@ -337,7 +327,7 @@ function draw() {
     fill(200);
     noStroke();
     textSize(text_size)
-    text("Hover for more information!",highlight_circlex+105, highlight_circley-25,100);
+    text("Click for more information!",highlight_circlex+105, highlight_circley-25,100);
 
     fill(200);
     noStroke();
@@ -381,16 +371,6 @@ function draw() {
       }
       radio_selection = false;
     }
-
-
-    //Remove
-    // button.hide();
-    // timer_button.hide();
-    // radio.hide();
-    // nextbutton.hide();
-    // fill(bg)
-    // rect(700,250,200,200)
-
   }
   else{                                        //Analysis page
     // clear();
@@ -442,6 +422,34 @@ function draw() {
   }
 }
 
+function mouseClicked(){
+  var dis = dist(mouseX,mouseY,highlight_circlex, highlight_circley);
+
+  if(size_w > 1200){//desktop
+    if(size_h>1024){//big screens
+
+    }
+    else{ //tablets/ipad/desktop
+      if(dis < (r+5)/2){      //Hover effect
+        image(contentcor_arr[s],windowWidth - 1286,windowHeight-391,content_size+80,content_size+120);      //hover image
+      }
+
+}
+}
+
+  else if(size_w < 1200){
+    if(size_h>1024){//ipad
+
+    }
+    else{//phones
+      if(dis < (r+5)/2){      //Hover effect
+        translate(windowWidth/2,windowHeight/2)
+        image(contentcor_arr[s],oct_posx,oct_posy+20,content_size+160,content_size+250);      //hover image
+      }
+    }
+  }
+}
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
@@ -454,6 +462,11 @@ function imageChange(){
     radio_selection = true;                //clear radio selections
     push();
     translate(windowWidth/2,windowHeight/2)
+
+      fill(bg);
+      noStroke();
+      rect(windowWidth - 1286,0,content_size+80,windowHeight*2)
+
 
     if(size_w > 1200){//desktop
       if(size_h>1024){//big screens
@@ -670,7 +683,7 @@ function initialize(){
     }
     else{//phones
       oct_size = 300;
-      content_size = 500;
+      content_size = 480;
       min_csize = 80;
       max_csize = 190;
     }
