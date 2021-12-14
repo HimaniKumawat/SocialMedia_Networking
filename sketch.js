@@ -389,6 +389,13 @@ function draw() {
     button.hide();
     timer_button.hide();
     radio.hide();
+    if(s==0){             //First post
+      prevbutton.hide();
+    }
+    else{
+      prevbutton.show();
+      prevbutton.mousePressed(previmageChange);
+    }
     // console.log(reaction_arr);
 
     //Show all the user reactions
@@ -430,8 +437,8 @@ function mouseClicked(){
 
     }
     else{ //tablets/ipad/desktop
-      if(dis < (r+5)/2){      //Hover effect
-        image(contentcor_arr[s],windowWidth - 1286,windowHeight-391,content_size+80,content_size+120);      //hover image
+      if(dis < (r+5)/2){
+        image(contentcor_arr[s],windowWidth/6,windowHeight/2.5,content_size+80,content_size+120);      //hover image
       }
 
 }
@@ -512,14 +519,14 @@ function imageChange(){
       nextbutton.hide();
       noFill();
       stroke(190)
-      rect(windowWidth-300,windowHeight-285,80,30)
-      text("END",windowWidth-320,windowHeight-278)
+      rect(windowWidth/1.238,windowHeight/1.7,80,30)
+      text("END",windowWidth/1.26,windowHeight/1.67)
       img = contentcor_arr[s];
     }
     else{
       fill(bg);
       noStroke();
-      rect(windowWidth-300,windowHeight-285,90,40)
+      rect(windowWidth/1.238,windowHeight/1.7,90,40)
       nextbutton.show();
     }
   }
@@ -712,8 +719,8 @@ function initialize(){
       arc_posy= timer_buttony+35;
       stroke_arc = 3;
       arc_size = timer_buttonsize+20;
-      next_xpos = windowWidth - 345;
-      next_ypos = windowHeight - 310;
+      next_xpos = windowWidth/1.28;
+      next_ypos = windowHeight/1.8;
       highlight_circlex = next_xpos+30;
       highlight_circley = windowHeight - windowHeight+280;
       text_size = 12;
